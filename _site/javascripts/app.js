@@ -7,10 +7,10 @@ $(document).ready(function() {
       var contentwidth = $(this).contents().width();
       var blockwidth = $(this).width();    
       if(contentwidth > blockwidth) {
-        $(this).animate({ width: "1020px"}, 250);
+        $(this).animate({ width: "1020px"}, 450);
         }
       }, function() {
-        $(this).animate({ width: "680px" }, 250);
+        $(this).animate({ width: "680px" }, 450);
   });
 
 });
