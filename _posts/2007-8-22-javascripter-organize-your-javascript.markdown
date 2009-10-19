@@ -8,7 +8,7 @@ Just like [Styler](http://the.railsi.st/2007/5/3/styler-stylesheets-made-easy), 
 
 To use Javascripter, replace your <code>javascript\_include\_tags</code> with a single tag:
 
-{% highlight html %}
+{% highlight erb %}
 <head>
 <title>the.rails.ist</title>
 <%= javascripts %>
@@ -39,7 +39,7 @@ Follow these conventions and Javascripter will reward you with automagic goodnes
 
 Need Prototype? Just use the :defaults parameter, like normal.
 
-{% highlight html %}
+{% highlight erb %}
 <head>
 <title>the.rails.ist</title>
 <%= javascripts :defaults %>
@@ -63,7 +63,7 @@ And you'll get this:
 
 Need to include extra javascript libraries? Use the :include parameter:
 
-{% highlight ruby %}
+{% highlight erb %}
 <%= javascripts :include => "lowpro" %>
 <%= javascripts :include => ["lowpro", "lightbox"] %>
 {% endhighlight %}

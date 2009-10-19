@@ -4,7 +4,7 @@ title: Sass version of Eric Meyer's Reset
 ---
 Here's a Sass version of [Eric Meyer's CSS reset](http://railsontherun.com/) (the "Resetting Again" version).
 
-{% highlight ruby %}
+{% highlight text %}
 // Reset
 
 html, body, div, span, applet, object, iframe,

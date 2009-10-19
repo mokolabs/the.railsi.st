@@ -36,7 +36,7 @@ end
 
 Then add <code>&lt;%= stylesheets %&gt;</code> to your layout(s):
 
-{% highlight html %}
+{% highlight erb %}
 <html>
 <head>
 <title>the.rails.ist</title>

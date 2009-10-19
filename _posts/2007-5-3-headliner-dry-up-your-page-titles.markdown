@@ -16,7 +16,7 @@ end
 
 Then, in your main layout, you might have something like this:
 
-{% highlight html %}
+{% highlight erb %}
 <head>
 <title>My website<% if @title %>: <%= @title %><% end %></title>
 </head
@@ -30,7 +30,7 @@ So, by moving these titles into your views, we can DRY things up a bit and reinf
 
 First, add this code to your main layout:
 
-{% highlight ruby %}
+{% highlight erb %}
 <head>
 <%= title :site => "My website" %>
 </head>
@@ -38,7 +38,7 @@ First, add this code to your main layout:
 
 Then, to set the page title, add this to each of your views:
 
-{% highlight html %}
+{% highlight erb %}
 <h1><%= title "My page title" %></h1>
 {% endhighlight %}
 
@@ -65,7 +65,7 @@ Use these options to customize the title format:
 
 And here are a few examples to give you ideas.
 
-{% highlight ruby %}
+{% highlight erb %}
 <%= title :separator => "&mdash;" %>
 <%= title :prefix => false, :separator => ":" %>
 <%= title :lowercase => true %>
@@ -76,13 +76,13 @@ And here are a few examples to give you ideas.
 
 How do you set the page title without showing it in the view?
 
-{% highlight ruby %}
+{% highlight erb %}
 <% title "My page title" %>
 {% endhighlight %}
 
 What if your view headline is different from your page title?
 
-{% highlight ruby %}
+{% highlight erb %}
 <%= title "My page title", "My headline" %>
 {% endhighlight %}
 
@@ -90,7 +90,7 @@ What if your view headline is different from your page title?
 
 Just like ERB's [HTML safe method](http://www.ruby-doc.org/stdlib/libdoc/erb/rdoc/), you can invoke Headliner with a single letter alias.
 
-{% highlight html %}
+{% highlight erb %}
 <h1><%=t "My page title" %></h1>
 {% endhighlight %}
 

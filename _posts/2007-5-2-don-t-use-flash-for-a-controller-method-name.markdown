@@ -4,7 +4,7 @@ title: "Don't use flash for a controller method name"
 ---
 While working on a [Flash developers page](http://chumby.com/developers/flash) for the Chumby website, I kept getting this error:
 
-{% highlight ruby %}
+{% highlight bash %}
 Error in DevelopersController#flash
 
 You have a nil object when you didn't expect it!

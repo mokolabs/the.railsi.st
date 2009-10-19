@@ -8,7 +8,7 @@ Styler is designed to DRY up the process of including and generating stylesheets
 
 To use Styler, just update your layout(s) with this code:
 
-{% highlight html %}
+{% highlight erb %}
 <head>
 <title>the.rails.ist</title>
 <%= stylesheets %>
@@ -48,7 +48,7 @@ When used in combination, these conventions can scale up to support pretty big a
 
 Conventions are great, but need to add your own stylesheets?
 
-{% highlight ruby %}
+{% highlight erb %}
 <%= stylesheets :include => "reset" %>
 <%= stylesheets :include => ["reset", "fonts"] %>
 {% endhighlight %}

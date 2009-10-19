@@ -12,7 +12,7 @@ Since a lot of people use Mike Clark's excellent [File Upload Fu tutorial](http:
 
 If we complete the tutorial, here's how attachment_fu will store our first image upload:
 
-{% highlight ruby %}
+{% highlight bash %}
 public/mugshots/0000/0001/chunkybacon.png
 public/mugshots/0000/0001/chunkybacon_thumb.png
 {% endhighlight %}
@@ -55,7 +55,7 @@ end
 
 Now, when we upload an image, it will be stored like so:
 
-{% highlight ruby %}
+{% highlight bash %}
 public/images/mugshots/fullsize/2.png
 public/images/mugshots/thumb/2.png
 {% endhighlight %}
