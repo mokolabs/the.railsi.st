@@ -92,6 +92,7 @@ a:hover {
 /* LAYOUT */
 
 #page {
+  margin: 40px auto 20px auto;
   width: 1050px;
 }
 
