@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ Don’t use ‘flash’ for a controller method name</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>While working on a <a href="http://chumby.com/developers/flash">Flash developers page</a> for the Chumby website, I kept getting this error:</p>
+
+<p>&lt;macro:code lang=”ruby”>
+Error in DevelopersController#flash</p>
+
+<p>You have a nil object when you didn't expect it!
+The error occured while evaluating nil.sweep
+&lt;/macro:code></p>
+
+<p>Pretty puzzling at first. The method was empty, so what could be wrong here?</p>
+
+<p>&lt;filter:jscode lang="ruby">
+class DevelopersController &lt; ApplicationController</p>
+
+<p>  def flash
+  end</p>
+
+<p>end
+&lt;/filter:jscode></p>
+
+<p>Eventually... it hit me! ActionController has its own <a href="http://api.rubyonrails.org/classes/ActionController/Flash.html">flash method</a> which is used to display flash notices and warnings.</p>
+
+<p>But, in this case, I was making a page about Adobe Flash, so I was running over a reserved word for controller method names. Kinda obvious, once you think about it.</p>
+
+
+<p>What's the workaround? Well... if you really need your page to be named "flash" (and I did), just remove the method from your controller. As long as you have a template named flash.rhtml, the page will still load.</p>
+
+
+</div>
+
+
+</body>
+</html>

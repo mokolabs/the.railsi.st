@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ Don’t use finders with validation helpers</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>Rather innocently, I tried using this validation on my Category model.</p>
+
+<p>&lt;filter:jscode lang="ruby">
+validates_exclusion_of :name,</p>
+
+<pre><code>                   :within =&gt; Widget.find(:all).collect(&amp;:name), 
+                   :message =&gt; "used by a widget"
+</code></pre>
+
+<p>&lt;/filter:jscode></p>
+
+<p>The idea behind this validation was to make sure a Category doesn't have the same name as a Widget.</p>
+
+<p>But since validations are class methods, they get loaded whenever you access a model. So that means we get an extra SQL query <u>every time</u> we do anything with our Category class, not just on create or update.</p>
+
+<p>&lt;filter:jscode lang="sql">
+User Load (0.001142)   SELECT * FROM widgets LIMIT 1
+&lt;/filter:jscode></p>
+
+<p>This might not seem like a big deal, but it's always good practice to keep database calls to a minimum.</p>
+
+<p>So what's the workaround? Use a protected <code>#validate</code> method instead.</p>
+
+<p>&lt;filter:jscode lang="ruby">
+def validate
+  errors.add(:name, "used by a widget") if Widget.find_by_name(self.name)
+end
+&lt;/filter:jscode></p>
+
+<p>You get the same validation, but without all the extra SQL love.</p>
+
+</div>
+
+
+</body>
+</html>

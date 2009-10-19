@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ Sass version of Eric Meyer's Reset</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>Here's a Sass version of <a href="http://meyerweb.com/eric/thoughts/2008/01/15/resetting-again/">Eric Meyer's CSS reset</a> (the "Resetting Again" version).</p>
+
+<p>&lt;filter:jscode lang="ruby">
+// Reset</p>
+
+<p>html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td
+  :margin 0
+  :padding 0
+  :border 0
+  :outline 0
+  :font-size 100%
+  :vertical-align baseline
+  :background transparent</p>
+
+<p>body
+  :line-height 1</p>
+
+<p>ol, ul
+  :list-style none</p>
+
+<p>blockquote, q
+  :quotes none</p>
+
+<p>// remember to define focus styles!
+\:focus
+  :outline 0</p>
+
+<p>// remember to highlight inserts somehow!
+ins
+  :text-decoration none</p>
+
+<p>del
+  :text-decoration line-through</p>
+
+<p>// tables still need 'cellspacing="0"' in the markup
+table
+  :border-collapse collapse
+  :border-spacing 0
+&lt;/filter:jscode></p>
+
+<p>Just drop this into the top of your application.sass file, and you're good to go!</p>
+
+</div>
+
+
+</body>
+</html>

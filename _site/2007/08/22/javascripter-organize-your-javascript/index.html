@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ Javascripter: Organize your javascript</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>Just like <a href="http://the.railsi.st/2007/5/3/styler-stylesheets-made-easy">Styler</a>, you can use Javascripter to keep javascript organized in your application.</p>
+
+<h2>Usage</h2>
+
+
+<p>To use Javascripter, replace your <code>javascript_include_tags</code> with a single tag:</p>
+
+<p>&lt;filter:jscode lang="ruby">
+<head>
+<title>the.rails.ist</title>
+&lt;%= javascripts %>
+</head>
+&lt;/filter:jscode></p>
+
+<p>Once you do, your javascripts will be included automatically, using the conventions below.</p>
+
+<p>&lt;filter:jscode lang="ruby">
+<head>
+<title>the.rails.ist</title>
+<script src="/javascripts/application.js?1183566571" />
+</head>
+&lt;/filter:jscode></p>
+
+<h2>Organize your javascripts</h2>
+
+
+<p>Javascripter uses a simple set of conventions:</p>
+
+<ul>
+<li>Javascript for your entire application should be stored in application.js</li>
+<li>Javascript for specific controllers should be stored in controller.js</li>
+<li>Javascript for specific actions should be stored in controller_action.js</li>
+<li>Javascript for specific actions should be stored in controller/action.js (optional)</li>
+</ul>
+
+
+<p>Follow these conventions and Javascripter will reward you with automagic goodness, loading javascripts for specific controllers or actions whenever they are active.</p>
+
+<h2>Support for :defaults</h2>
+
+
+<p>Need Prototype? Just use the :defaults parameter, like normal.</p>
+
+<p>&lt;filter:jscode lang="ruby">
+<head>
+<title>the.rails.ist</title>
+&lt;%= javascripts :defaults %>
+</head>
+&lt;/filter:jscode></p>
+
+<p>And you'll get this:</p>
+
+<p>&lt;filter:jscode lang="ruby">
+<head>
+<title>the.rails.ist</title>
+<script src="/javascripts/prototype.js?1187404678"></script>
+<script src="/javascripts/effects.js?1187404678"></script>
+<script src="/javascripts/dragdrop.js?1187404678"></script>
+<script src="/javascripts/controls.js?1187404678"></script>
+<script src="/javascripts/application.js?1187404678" />
+</head>
+&lt;/filter:jscode></p>
+
+<h2>Include additional javascripts</h2>
+
+
+<p>Need to include extra javascript libraries? Use the :include parameter:</p>
+
+<p>&lt;filter:jscode lang="ruby">
+&lt;%= javascripts :include => "lowpro" %>
+&lt;%= javascripts :include => ["lowpro", "lightbox"] %>
+&lt;/filter:jscode></p>
+
+<h2>Generator</h2>
+
+
+<p>Javascripter also includes a generator that will create a default application.js
+script and separate javascript files for each controller in your application.</p>
+
+<p>To use the generator, run this command in your terminal:</p>
+
+<p>&lt;filter:jscode lang="ruby">
+script/generate javascripts
+&lt;/filter:jscode></p>
+
+<p>If you add a new controller, just run the generator again and a new javascript
+for the controller will be created. (Existing javascripts will be ignored.)</p>
+
+<h2>Credits</h2>
+
+
+<p>Special thanks to <a href="http://blog.smartbomb.com.au">Lachie Cox</a> and the rest of my <a href="http://rubyonrails.com.au/sydney-meetups">RORO Sydney</a> comrades who asked for this plugin.</p>
+
+<h2>Install</h2>
+
+
+<p>&lt;filter:jscode lang="ruby">script/plugin install git://github.com/mokolabs/javascripter.git&lt;/filter:jscode></p>
+
+</div>
+
+
+</body>
+</html>

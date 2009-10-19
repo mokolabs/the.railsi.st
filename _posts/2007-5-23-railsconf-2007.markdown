@@ -1,0 +1,9 @@
+--- 
+layout: post
+title: RailsConf 2007
+---
+Well, once again, RailsConf did not disappoint.
+
+Portland kicked ass. Three times more attendees. Actual exhibitors. Great keynotes from Chad Fowler and Dave Thomas. Chris Wanstrath's talk on memecached. Watching a pack of swinging seniors overtake the SD Ruby meetup. Exploring downtown Portland. Printing business cards at Kinkos. Late night meals at Denny's. Happy hour with the Joyent folk. Meeting Ze Frank in person. And hacking out at RejectConf.
+
+But the best part was just meeting all you Ruby folk.

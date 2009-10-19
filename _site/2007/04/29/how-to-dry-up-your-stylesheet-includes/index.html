@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ How to DRY up your stylesheet includes</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>Here's a helper to automatically include stylesheets in your layouts.</p>
+
+<p>This helper will include any stylesheets in public/stylesheets/ that match these conventions:</p>
+
+<ul>
+<li>Styles for your entire application should be stored in application.css</li>
+<li>Styles for specific controllers should be stored in controller_name.css</li>
+<li>Styles for Internet Explorer 7 should be stored in ie7.css</li>
+<li>Styles for Internet Explorer 6 should be stored in ie6.css</li>
+</ul>
+
+
+<p>The IE6 and 7 stylesheets will be wrapped in conditional comments, so they'll only load when requested by matching browsers.</p>
+
+<p>To install, just add this method to your helpers/application_helpers.rb</p>
+
+<p>&lt;filter:jscode lang="ruby">
+def stylesheets
+  stylesheets = ["application", "#{controller.controller_name}", "ie7", "ie6"]
+  stylesheets.collect! do |name|</p>
+
+<pre><code>if File.exist?("#{RAILS_ROOT}/public/stylesheets/#{name}.css")
+  case name
+  when "ie7"
+    "&lt;!--[if IE 7]&gt;\n" + stylesheet_link_tag(name) + "\n&lt;![endif]--&gt;"
+  when "ie6"
+    "&lt;!--[if IE 6]&gt;\n" + stylesheet_link_tag(name) + "\n&lt;![endif]--&gt;"
+  else
+    stylesheet_link_tag(name)
+  end
+end
+</code></pre>
+
+<p>  end
+  stylesheets.compact.join("\n")
+end
+&lt;/filter:jscode></p>
+
+<p>Then add <code>&lt;%= stylesheets %&gt;</code> to your layout(s):</p>
+
+<p>&lt;filter:jscode lang="html">
+<html>
+<head>
+<title>the.rails.ist</title>
+&lt;%= stylesheets %>
+</head>
+<body>
+</body>
+</html>
+&lt;/filter:jscode></p>
+
+<p>When the template is rendered, you'll get this:</p>
+
+<p>&lt;filter:jscode lang="html">
+<html>
+<head>
+<title>the.rails.ist</title>
+<link href="/stylesheets/application.css?1170968897" />
+<!--[if IE 7]>
+<link href="/stylesheets/ie7.css?1170968897" />
+&lt;![endif]-->
+<!--[if IE 6]>
+<link href="/stylesheets/ie6.css?1170968897" />
+&lt;![endif]-->
+</head>
+<body>
+</body>
+</html>
+&lt;/filter:jscode></p>
+
+<p>Note: to keep the example code clean, I removed the media, rel, and type attributes that Rails normally includes with stylesheet links. But, when you run the helper for real, they'll be included.</p>
+
+<p>The cool part is that controller-specific stylesheets will only be included when the relevant controller is invoked. Looking at a page in your "products" controller? Then products.css will be included, but only on pages loaded by that controller.</p>
+
+<p>Want to go further?</p>
+
+<ul>
+<li>Need to support Internet Explorer 5.5 or earlier? Create a new stylesheet named ie55 (which will contain any IE5.5-specific styles), and then add <code>"ie55"</code> to the list of stylesheets at the start of the helper</li>
+<li>Add <code>"#{controller.controller_name}_#{controller.action_name}"</code> to the list of stylesheets. This will allow you to include stylesheets that are specific to a single action.</li>
+<li>Need to include a stylesheet for Lightbox or Redbox? Same deal... just update the stylesheet list (and make your any new stylesheets are copied into your <code>public/stylesheets/</code> directory).</li>
+</ul>
+
+
+<p>Stay tuned... I'll be releasing a plugin based on this helper soon. UPDATE: the plugin <a href="/2007/5/3/styler-stylesheets-made-easy">has been released</a>.</p>
+
+<p>(This code is loosely based on <a href="http://www.bigbold.com/snippets/posts/show/509">this snippet</a>.)</p>
+
+</div>
+
+
+</body>
+</html>

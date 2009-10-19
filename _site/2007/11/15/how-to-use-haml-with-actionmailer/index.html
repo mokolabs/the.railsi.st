@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ How to use Haml with ActionMailer</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>Poor ActionMailer. It just doesn't get enough love.</p>
+
+<p>If you try using <a href="http://haml.hamptoncatlin.com/">Haml</a> in your email templates, Rails will ignore your pretty little Haml code.</p>
+
+<p>Why does this happen? Because, by default, ActionMailer only recognizes .erb or .rhtml extensions with templates that use a specific mime type (example: <code>forgot_password.text.html.erb</code>).</p>
+
+<p>But thanks to <a href="http://dev.rubyonrails.org/ticket/7534">changest 7534</a>, ActionMailer can now use Haml too.</p>
+
+<p>Just drop this into your environment.rb and restart:</p>
+
+<p>&lt;filter:jscode lang="ruby">
+ActionMailer::Base.register_template_extension('haml')
+&lt;/filter:jscode></p>
+
+<p>This should work on Rails 1.2.4 and up.</p>
+
+<h2>Extra credit</h2>
+
+
+<p>Don't use HTML email unless you really need it. You'll upset users and go crazy trying to make things work in a hundred email clients. Stick to text unless HTML can really add substantial value to your notifications.</p>
+
+</div>
+
+
+</body>
+</html>

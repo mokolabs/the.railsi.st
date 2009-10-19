@@ -1,0 +1,5 @@
+auto: true
+markdown:    rdiscount
+pygments:    true
+permalink:   pretty
+server_port: 4000

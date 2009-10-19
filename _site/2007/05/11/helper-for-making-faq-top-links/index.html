@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ Helper for making FAQ ‘top’ links</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>Here's a simple helper for adding top-style links to a long frequently asked questions document.</p>
+
+<p>Add the code below to your helpers/application_helpers.rb file.</p>
+
+<p>&lt;filter:jscode lang="ruby">
+def top
+  '<a href="#" class="top" onclick="window.scrollTo(0,0);return false;">top</a>'
+end
+&lt;/filter:jscode></p>
+
+<p>Then add <code>&lt;%= top %&gt;</code> to each FAQ answer:</p>
+
+<p>&lt;filter:jscode lang="html">
+<h2><a>Does Rails scale?</a>&lt;%= top %></h2>
+&lt;/filter:jscode></p>
+
+<p>For extra credit, style and tweak the markup to your liking.</p>
+
+</div>
+
+
+</body>
+</html>

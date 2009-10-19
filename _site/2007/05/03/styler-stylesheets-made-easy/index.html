@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ Styler: Stylesheets made easy</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>Styler is designed to DRY up the process of including and generating stylesheets, so you can think less about stylesheet configuration and more about styling.</p>
+
+<h2>Usage</h2>
+
+
+<p>To use Styler, just update your layout(s) with this code:</p>
+
+<p>&lt;filter:jscode lang="ruby">
+<head>
+<title>the.rails.ist</title>
+&lt;%= stylesheets %>
+</head>
+&lt;/filter:jscode></p>
+
+<p>Styler will then include your stylesheets automatically:</p>
+
+<p>&lt;filter:jscode lang="ruby">
+<head>
+<title>the.rails.ist</title>
+<link href="/stylesheets/application.css?1170968897" />
+<!--[if IE 7]>
+<link href="/stylesheets/ie7.css?1170968897" />
+&lt;![endif]-->
+<!--[if IE 6]>
+<link href="/stylesheets/ie6.css?1170968897" />
+&lt;![endif]-->
+</head>
+&lt;/filter:jscode></p>
+
+<p>Styler will also dynamically include stylesheets for each of your controllers (if such stylesheets are present), so you can keep your styles organized into logical sections.</p>
+
+<h2>Organize your stylesheets</h2>
+
+
+<p>Styler uses a simple set of conventions:</p>
+
+<ul>
+<li>Styles for your entire application should be stored in <code>application.css</code></li>
+<li>Styles for specific controllers should be stored in <code>controller.css</code></li>
+<li>Styles for specific actions should be stored in <code>controller_action.css</code></li>
+<li>Styles for Internet Explorer 7 should be stored in <code>ie7.css</code></li>
+<li>Styles for Internet Explorer 6 should be stored in <code>ie6.css</code></li>
+</ul>
+
+
+<p>When used in combination, these conventions can scale up to support pretty big applications.</p>
+
+<h2>Include additional stylesheets</h2>
+
+
+<p>Conventions are great, but need to add your own stylesheets?</p>
+
+<p>&lt;filter:jscode lang="ruby">
+&lt;%= stylesheets :include => "reset" %>
+&lt;%= stylesheets :include => ["reset", "fonts"] %>
+&lt;/filter:jscode></p>
+
+<h2>Use nested stylesheets (optional)</h2>
+
+
+<p>For bigger projects, you might wish to break your stylesheets into separate directories.</p>
+
+<p>To use nested stylesheets, just create subdirectories in <code>public/stylesheets</code> for each of your controllers, and then add stylesheets for individual actions you wish to style.</p>
+
+<ul>
+<li>Styles for an entire controller should be stored in <code>controller.css</code></li>
+<li>Styles for specific actions should be stored in <code>controller/action.css</code></li>
+</ul>
+
+
+<h2>Generator</h2>
+
+
+<p>Styler also includes a generator that will create a default set of stylesheets (<code>application.css</code>, <code>ie7.css</code>, and <code>ie6.css</code>) and a separate stylesheet for each controller in your application.</p>
+
+<p>To use the generator, run this command in your terminal:</p>
+
+<p>&lt;filter:jscode lang="ruby">script/generate stylesheets&lt;/filter:jscode></p>
+
+<p>If you add a new controller, just run the generator again and a new stylesheet for the controller will be created. (Styler will safely ignore any existing stylesheets.)</p>
+
+<h2>Install</h2>
+
+
+<p>&lt;filter:jscode lang="ruby">script/plugin install git://github.com/mokolabs/styler.git&lt;/filter:jscode></p>
+
+</div>
+
+
+</body>
+</html>

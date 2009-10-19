@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ Helper for converting links into Markdown</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>I'm working on importing lots of legacy content into Rails, so I came up with this little method to convert old-school link formats (like <a href="http://en.wikipedia.org/wiki/BBCode">BBCode</a> and HTML) into <a href="http://daringfireball.net/projects/markdown/">Markdown</a>.</p>
+
+<p>&lt;filter:jscode lang="ruby">
+def convert_links_to_markdown(text)
+  # [url=http://google.com]Google[/url]
+  text = text.gsub(/([url\=)(.<em>?)(])(.</em>?)([\/url])/, ('<a href="\2">\4</a>'))</p>
+
+<p>  # <a href="http://google.com">Google</a>
+  text = text.gsub(/(<a href=")(.*?)(">)(.*?)(&lt;\/a>)/, ('<a href="\2">\4</a>'))
+end
+&lt;/filter:jscode></p>
+
+<p>Here's a <a href="http://pastie.caboo.se/170623">Pastie version</a>, as well. (Special thanks to <a href="http://railsontherun.com/">Matt Aimonetti</a> for fixing a bug in the Regexp.)</p>
+
+</div>
+
+
+</body>
+</html>

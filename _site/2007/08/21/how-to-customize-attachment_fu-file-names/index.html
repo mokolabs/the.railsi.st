@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ How to customize attachment_fu file names</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>For uploading files, it's pretty hard to beat <a href="http://svn.techno-weenie.net/projects/plugins/attachment_fu/">attachment_fu</a>. But it can be overkill for smaller projects.</p>
+
+<p>One issue is that attachment_fu uses id partioning. This is a great way to overcome native file system limitations when you have more than 32,000 attachments. By segmenting files into different directories, you can have millions of attachments, if necessary. Empahsis on "if necessary". It usually isn't.</p>
+
+<p>Also, attachment_fu preserves original filenames. While this make sense for many projects, sometimes you need to have control over the naming of attachments.</p>
+
+<p>Since a lot of people use Mike Clark's excellent <a href="http://clarkware.com/cgi/blosxom/2007/02/24">File Upload Fu tutorial</a>, let's use that as our starting point for customizing file names.</p>
+
+<p>If we complete the tutorial, here's how attachment_fu will store our first image upload:</p>
+
+<p>&lt;filter:jscode lang="ruby">
+public/mugshots/0000/0001/chunkybacon.png
+public/mugshots/0000/0001/chunkybacon_thumb.png
+&lt;/filter:jscode></p>
+
+<p>Hmmm, not bad. But I'd like to customize things:</p>
+
+<ul>
+<li>Images should be stored in <code>public/images/</code></li>
+<li>Thumbnails should be organized by size</li>
+<li>ID partioning (<code>0000/0001/</code>) should be disabled</li>
+<li>Images should be renamed with the Mugshot id</li>
+</ul>
+
+
+<p>So let's open up our Mugshot model and tweak it a bit.</p>
+
+<p>&lt;filter:jscode lang="ruby">
+class Mugshot &lt; ActiveRecord::Base
+  has_attachment :content_type => :image,</p>
+
+<pre><code>             :storage =&gt; :file_system,
+             :max_size =&gt; 500.kilobytes,
+             :resize_to =&gt; '320x200&gt;',
+             :thumbnails =&gt; { :thumb =&gt; '100x100&gt;' },
+             :path_prefix =&gt; 'public/images/mugshots'
+</code></pre>
+
+<p>  validates_as_attachment</p>
+
+<p>  def full_filename(thumbnail = nil)</p>
+
+<pre><code>file_system_path = (thumbnail ? thumbnail_class : self).attachment_options[:path_prefix]
+case self.thumbnail
+when "thumb"
+  File.join(RAILS_ROOT, file_system_path, 'thumb', thumbnail_name_for(thumbnail, self.parent_id))
+else
+  File.join(RAILS_ROOT, file_system_path, 'fullsize', thumbnail_name_for(thumbnail, self.id))
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  def thumbnail_name_for(thumbnail = nil, asset = nil)</p>
+
+<pre><code>extension = filename.scan(/\.\w+$/)
+return "#{asset}#{extension}"
+</code></pre>
+
+<p>  end
+end
+&lt;/filter:jscode></p>
+
+<p>Now, when we upload an image, it will be stored like so:</p>
+
+<p>&lt;filter:jscode lang="ruby">
+public/images/mugshots/fullsize/2.png
+public/images/mugshots/thumb/2.png
+&lt;/filter:jscode></p>
+
+<p>How does this work?</p>
+
+<p>Well, first, we customize the <code>:path_prefix</code> value in <code> has_attachment</code> to set the base location of our files.</p>
+
+<p>Second, we override the <code>full_filename</code> method to force attachment_fu to save each thumbnail type into its own directory. This way, all large thumbnails are stored in <code>images/mugshots/fullsize</code> and all small thumbnails are stored in <code>images/mugshots/thumb</code>. (By default, attachment_fu stores all thumbnail sizes for an object in a single directory.)</p>
+
+<p>Lastly, we override the <code>thumbnail_name_for</code> method to customize the filename to our liking... in this case, the file name will consist of the parent mugshot id, plus the original file's file extension.</p>
+
+<p>That's all we need to do... now our files are stored exactly where we want them!</p>
+
+<p>(Thanks to AirBlade Software for <a href="http://blog.airbladesoftware.com/2007/6/20/how-to-store-thumbnails-and-full-size-images-in-different-directories-with-attachment_fu">showing the way</a>.)</p>
+
+<h2>Extra credit</h2>
+
+
+<p>If your attachments belong to another model (like a user), you'll need to use a before filter to associate the parent model id with the thumbnail you wish to store.</p>
+
+<p>&lt;filter:jscode lang="ruby">
+before_thumbnail_saved do |record, thumbnail|
+  thumbnail.user_id = record.user_id
+end
+&lt;/filter:jscode></p>
+
+<p>You'll also need an extra migration to store the parent id. (Don't use the parent_id field... that's reserved by attachment_fu.)</p>
+
+<h2>Extra, extra credit</h2>
+
+
+<p>What if you want three sizes? Large (original image), medium, and small?</p>
+
+<p>&lt;filter:jscode lang="ruby">
+has_attachment :content_type => :image,</p>
+
+<pre><code>           :storage =&gt; :file_system,
+           :max_size =&gt; 500.kilobytes,
+           :thumbnails =&gt; { :small =&gt; '100x100&gt;', :medium =&gt; '200x200&gt;' },
+           :path_prefix =&gt; 'public/images/mugshots'
+</code></pre>
+
+<p>validates_as_attachment</p>
+
+<p>def full_filename(thumbnail = nil)
+  file_system_path = (thumbnail ? thumbnail_class : self).attachment_options[:path_prefix]
+  case self.thumbnail
+  when "small"</p>
+
+<pre><code>File.join(RAILS_ROOT, file_system_path, 'small', thumbnail_name_for(thumbnail, self.parent_id))
+</code></pre>
+
+<p>  when "medium"</p>
+
+<pre><code>File.join(RAILS_ROOT, file_system_path, 'medium', thumbnail_name_for(thumbnail, self.parent_id))
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>File.join(RAILS_ROOT, file_system_path, 'large', thumbnail_name_for(thumbnail, self.id))
+</code></pre>
+
+<p>  end
+end
+&lt;/filter:jscode></p>
+
+</div>
+
+
+</body>
+</html>

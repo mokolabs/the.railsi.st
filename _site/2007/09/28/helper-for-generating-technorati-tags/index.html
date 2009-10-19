@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>the.rails.ist @ Helper for generating Technorati tags</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="post">
+<p>Need to support <a href="http://technorati.com/help/tags.html">Technorati tags</a> in your application?</p>
+
+<p>Here's a helper that does all the work. Just give it a list of tags and the helper will spit out all the necessary html for Technorati to index your content. (When you deploy, don't forget to <a href="http://technorati.com/ping/">ping them</a> so they index you.)</p>
+
+<p>&lt;filter:jscode lang="ruby">
+def technorati_tags_for(model)
+  tag_links = Array.new
+  model.tags.split(',').sort.each do |tag|
+  tag_links &lt;&lt; '<a href="http://technorati.com/tag/' +</p>
+
+<pre><code>            tag.split(" ").join("+") + '" rel="tag"&gt;' + 
+            tag + '&lt;/a&gt;'
+</code></pre>
+
+<p>  end
+  tag_links.join("\n")
+end
+&lt;/filter:jscode></p>
+
+<h2>Assumptions</h2>
+
+
+<p>Your tags are comma delimited and stored in a model attribute called <code>tags</code>. (This helper should be placed on each individual blog post... typically the <code>"show"</code> action.)</p>
+
+<h2>Extra credit</h2>
+
+
+<ul>
+<li>If you have a tag cloud, replace <code>http://technorati.com/tag/</code> with the path to your local tag pages.</li>
+<li>Don't need to show the tags? Wrap them in a div that's styled with <code>display: none;</code>.</li>
+<li>Think about automatically adding a default set of tags to each post. If, for instance your blog was 100% about Rails, add tags for "rails" and "ruby on rails". You can add these in the helper without cluttering up your database or admin interface with redundant information.</li>
+</ul>
+
+
+</div>
+
+
+</body>
+</html>
