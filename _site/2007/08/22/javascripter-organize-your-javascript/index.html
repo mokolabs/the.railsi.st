@@ -7,6 +7,9 @@
 </head>
 <body>
 
+
+<h1>Javascripter: Organize your javascript</h1>
+
 <div id="post">
 <p>Just like <a href="http://the.railsi.st/2007/5/3/styler-stylesheets-made-easy">Styler</a>, you can use Javascripter to keep javascript organized in your application.</p>
 
@@ -15,21 +18,23 @@
 
 <p>To use Javascripter, replace your <code>javascript_include_tags</code> with a single tag:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-<head>
-<title>the.rails.ist</title>
-&lt;%= javascripts %>
-</head>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>the.rails.ist<span class="nt">&lt;/title&gt;</span>
+<span class="err">&lt;</span>%= javascripts %&gt;
+<span class="nt">&lt;/head&gt;</span>
+</pre>
+</div>
+
 
 <p>Once you do, your javascripts will be included automatically, using the conventions below.</p>
 
-<p>&lt;filter:jscode lang="ruby">
-<head>
-<title>the.rails.ist</title>
-<script src="/javascripts/application.js?1183566571" />
-</head>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>the.rails.ist<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/javascripts/application.js?1183566571&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+</pre>
+</div>
+
 
 <h2>Organize your javascripts</h2>
 
@@ -51,35 +56,38 @@
 
 <p>Need Prototype? Just use the :defaults parameter, like normal.</p>
 
-<p>&lt;filter:jscode lang="ruby">
-<head>
-<title>the.rails.ist</title>
-&lt;%= javascripts :defaults %>
-</head>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>the.rails.ist<span class="nt">&lt;/title&gt;</span>
+<span class="err">&lt;</span>%= javascripts :defaults %&gt;
+<span class="nt">&lt;/head&gt;</span>
+</pre>
+</div>
+
 
 <p>And you'll get this:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-<head>
-<title>the.rails.ist</title>
-<script src="/javascripts/prototype.js?1187404678"></script>
-<script src="/javascripts/effects.js?1187404678"></script>
-<script src="/javascripts/dragdrop.js?1187404678"></script>
-<script src="/javascripts/controls.js?1187404678"></script>
-<script src="/javascripts/application.js?1187404678" />
-</head>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>the.rails.ist<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/javascripts/prototype.js?1187404678&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/javascripts/effects.js?1187404678&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/javascripts/dragdrop.js?1187404678&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/javascripts/controls.js?1187404678&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/javascripts/application.js?1187404678&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+</pre>
+</div>
+
 
 <h2>Include additional javascripts</h2>
 
 
 <p>Need to include extra javascript libraries? Use the :include parameter:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-&lt;%= javascripts :include => "lowpro" %>
-&lt;%= javascripts :include => ["lowpro", "lightbox"] %>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="sx">%= javascripts :include =</span><span class="o">&gt;</span> <span class="s2">&quot;lowpro&quot;</span> <span class="sx">%&gt;</span>
+<span class="sx">&lt;%= javascripts :include =&gt;</span> <span class="o">[</span><span class="s2">&quot;lowpro&quot;</span><span class="p">,</span> <span class="s2">&quot;lightbox&quot;</span><span class="o">]</span> <span class="o">%&gt;</span>
+</pre>
+</div>
+
 
 <h2>Generator</h2>
 
@@ -89,9 +97,10 @@ script and separate javascript files for each controller in your application.</p
 
 <p>To use the generator, run this command in your terminal:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-script/generate javascripts
-&lt;/filter:jscode></p>
+<div class="highlight"><pre>script/generate javascripts
+</pre>
+</div>
+
 
 <p>If you add a new controller, just run the generator again and a new javascript
 for the controller will be created. (Existing javascripts will be ignored.)</p>
@@ -104,7 +113,10 @@ for the controller will be created. (Existing javascripts will be ignored.)</p>
 <h2>Install</h2>
 
 
-<p>&lt;filter:jscode lang="ruby">script/plugin install git://github.com/mokolabs/javascripter.git&lt;/filter:jscode></p>
+<div class="highlight"><pre>script/plugin install git://github.com/mokolabs/javascripter.git
+</pre>
+</div>
+
 
 </div>
 

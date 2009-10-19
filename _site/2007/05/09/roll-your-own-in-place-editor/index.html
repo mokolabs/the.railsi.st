@@ -7,36 +7,42 @@
 </head>
 <body>
 
+
+<h1>Roll your own in-place editor</h1>
+
 <div id="post">
 <p>Recently, I needed a quick way to edit a model name in place.</p>
 
 <p>I ran across <code>#in_place_editor</code> in the Rails API and it worked perfectly... almost no work on my end, and sweet just-like-Flickr renaming goodness.</p>
 
-<p>&lt;filter:jscode lang="ruby">
-&lt;%= in_place_editor :name, :url => {:action => "rename_channel"}, :save_text => "Save", :with => "Form.serialize(form) + '&amp;channel=#{@channel.id}'" %>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="sx">%= in_place_editor :name, :url =</span><span class="o">&gt;</span> <span class="p">{</span><span class="ss">:action</span> <span class="o">=&gt;</span> <span class="s2">&quot;rename_channel&quot;</span><span class="p">},</span> <span class="ss">:save_text</span> <span class="o">=&gt;</span> <span class="s2">&quot;Save&quot;</span><span class="p">,</span> <span class="ss">:with</span> <span class="o">=&gt;</span> <span class="s2">&quot;Form.serialize(form) + &#39;&amp;channel=</span><span class="si">#{</span><span class="vi">@channel</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="o">%&gt;</span>
+</pre>
+</div>
+
 
 <p>My happiness was short-lived, as I realized I needed to tweak some things (highlight color, submit button placement, etc.) And, strangely, Rails seem to ignore some of the options I was passing in.</p>
 
 <p>But, hey, it's just a helper, right? So, when all else fails, let's write some code ourselves. Here's the standard output from this helper (and some ERB to insert the channel ID):</p>
 
-<p>&lt;filter:jscode lang="javascript">
-<script type="text/javascript">
-//&lt;![CDATA[
-new Ajax.InPlaceEditor('name', '/widgets/rename_channel', {callback:function(form) { return Form.serialize(form) + "&amp;channel=&lt;%= @channel.id %>" }, okText:'Save'})
-//]]>
-</script>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+<span class="c">//&lt;![CDATA[</span>
+<span class="k">new</span> <span class="nx">Ajax</span><span class="p">.</span><span class="nx">InPlaceEditor</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="o">,</span> <span class="s1">&#39;/widgets/rename_channel&#39;</span><span class="o">,</span> <span class="p">{</span><span class="nx">callback</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">Form</span><span class="p">.</span><span class="nx">serialize</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;channel=&lt;%= @channel.id %&gt;&quot;</span> <span class="p">}</span><span class="o">,</span> <span class="nx">okText</span><span class="o">:</span><span class="s1">&#39;Save&#39;</span><span class="p">})</span>
+<span class="c">//]]&gt;</span>
+<span class="o">&lt;/</span><span class="nx">script</span><span class="o">&gt;</span>
+</pre>
+</div>
+
 
 <p>So, using <a href="http://wiki.script.aculo.us/scriptaculous/show/Ajax.InPlaceEditor">this script.aculo.us documentation</a>, let's throw in some custom options that Rails doesn't support.</p>
 
-<p>&lt;filter:jscode lang="javascript">
-<script type="text/javascript">
-//&lt;![CDATA[
-new Ajax.InPlaceEditor('name', '/widgets/rename_channel', {callback:function(form) { return Form.serialize(form) + "&amp;channel=&lt;%= @channel.id %>" }, okText:'Save', formClassName:"edit_name", clickToEditText:'Click to rename channel', highlightcolor:'#cdd8ea'})
-//]]>
-</script>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+<span class="c">//&lt;![CDATA[</span>
+<span class="k">new</span> <span class="nx">Ajax</span><span class="p">.</span><span class="nx">InPlaceEditor</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="o">,</span> <span class="s1">&#39;/widgets/rename_channel&#39;</span><span class="o">,</span> <span class="p">{</span><span class="nx">callback</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">Form</span><span class="p">.</span><span class="nx">serialize</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;channel=&lt;%= @channel.id %&gt;&quot;</span> <span class="p">}</span><span class="o">,</span> <span class="nx">okText</span><span class="o">:</span><span class="s1">&#39;Save&#39;</span><span class="o">,</span> <span class="nx">formClassName</span><span class="o">:</span><span class="s2">&quot;edit_name&quot;</span><span class="o">,</span> <span class="nx">clickToEditText</span><span class="o">:</span><span class="s1">&#39;Click to rename channel&#39;</span><span class="o">,</span> <span class="nx">highlightcolor</span><span class="o">:</span><span class="s1">&#39;#cdd8ea&#39;</span><span class="p">})</span>
+<span class="c">//]]&gt;</span>
+<span class="o">&lt;/</span><span class="nx">script</span><span class="o">&gt;</span>
+</pre>
+</div>
+
 
 <p>Perfect! Now our editor has a custom highlight color, better hover text, and a new form class name.</p>
 

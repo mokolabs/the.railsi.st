@@ -7,26 +7,27 @@
 </head>
 <body>
 
+
+<h1>Roll your own attachment_fu validations</h1>
+
 <div id="post">
 <p>Lots of folks use attachment_fu to handle image uploads. It handles all the dirty work of uploading files, integrates with Amazon S3, and even supports all the different image libraries.</p>
 
 <p>Which is awesome... but it kinda sucks at validating files. Take a pretty typical Photo class:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-class Photo &lt; ActiveRecord::Base
-  has_attachment :content_type => :image,</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Photo</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">has_attachment</span> <span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="ss">:image</span><span class="p">,</span> 
+                 <span class="ss">:storage</span> <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span> 
+                 <span class="ss">:max_size</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="o">.</span><span class="n">megabytes</span><span class="p">,</span>
+                 <span class="ss">:resize_to</span> <span class="o">=&gt;</span> <span class="s1">&#39;320x200&gt;&#39;</span><span class="p">,</span>
+                 <span class="ss">:thumbnails</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:thumb</span> <span class="o">=&gt;</span> <span class="s1">&#39;100x100&gt;&#39;</span><span class="p">,</span> <span class="ss">:widget</span> <span class="o">=&gt;</span> <span class="s2">&quot;262x262&gt;&quot;</span> <span class="p">},</span>
+                 <span class="ss">:processor</span> <span class="o">=&gt;</span> <span class="no">MiniMagick</span>
+  <span class="n">validates_as_attachment</span>
 
-<pre><code>             :storage =&gt; :file_system, 
-             :max_size =&gt; 5.megabytes,
-             :resize_to =&gt; '320x200&gt;',
-             :thumbnails =&gt; { :thumb =&gt; '100x100&gt;', :widget =&gt; "262x262&gt;" },
-             :processor =&gt; MiniMagick
-</code></pre>
+<span class="k">end</span>
+</pre>
+</div>
 
-<p>  validates_as_attachment</p>
-
-<p>end
-&lt;/filter:jscode></p>
 
 <p>What happens when you forget to select a file before uploading?</p>
 
@@ -55,46 +56,42 @@ class Photo &lt; ActiveRecord::Base
 
 <p>Let's try it again, but in English:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-class Photo &lt; ActiveRecord::Base
-  has_attachment :content_type => :image,</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Photo</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">has_attachment</span> <span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="ss">:image</span><span class="p">,</span> 
+                 <span class="ss">:storage</span> <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span> 
+                 <span class="ss">:max_size</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="o">.</span><span class="n">megabytes</span><span class="p">,</span>
+                 <span class="ss">:resize_to</span> <span class="o">=&gt;</span> <span class="s1">&#39;320x200&gt;&#39;</span><span class="p">,</span>
+                 <span class="ss">:thumbnails</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:thumb</span> <span class="o">=&gt;</span> <span class="s1">&#39;100x100&gt;&#39;</span><span class="p">,</span> <span class="ss">:widget</span> <span class="o">=&gt;</span> <span class="s2">&quot;262x262&gt;&quot;</span> <span class="p">},</span>
+                 <span class="ss">:processor</span> <span class="o">=&gt;</span> <span class="no">MiniMagick</span>
+  
+  <span class="k">def</span> <span class="nf">validate</span>
+    <span class="n">errors</span><span class="o">.</span><span class="n">add_to_base</span><span class="p">(</span><span class="s2">&quot;You must choose a file to upload&quot;</span><span class="p">)</span> <span class="k">unless</span> <span class="nb">self</span><span class="o">.</span><span class="n">filename</span>
+    
+    <span class="k">unless</span> <span class="nb">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">==</span> <span class="kp">nil</span>
+      
+      <span class="c1"># Images should only be GIF, JPEG, or PNG</span>
+      <span class="o">[</span><span class="ss">:content_type</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">attr_name</span><span class="o">|</span>
+        <span class="n">enum</span> <span class="o">=</span> <span class="n">attachment_options</span><span class="o">[</span><span class="n">attr_name</span><span class="o">]</span>
+        <span class="k">unless</span> <span class="n">enum</span><span class="o">.</span><span class="n">nil?</span> <span class="o">||</span> <span class="n">enum</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="nb">send</span><span class="p">(</span><span class="n">attr_name</span><span class="p">))</span>
+          <span class="n">errors</span><span class="o">.</span><span class="n">add_to_base</span><span class="p">(</span><span class="s2">&quot;You can only upload images (GIF, JPEG, or PNG)&quot;</span><span class="p">)</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+      
+      <span class="c1"># Images should be less than 5 MB</span>
+      <span class="o">[</span><span class="ss">:size</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">attr_name</span><span class="o">|</span>
+        <span class="n">enum</span> <span class="o">=</span> <span class="n">attachment_options</span><span class="o">[</span><span class="n">attr_name</span><span class="o">]</span>
+        <span class="k">unless</span> <span class="n">enum</span><span class="o">.</span><span class="n">nil?</span> <span class="o">||</span> <span class="n">enum</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="nb">send</span><span class="p">(</span><span class="n">attr_name</span><span class="p">))</span>
+          <span class="n">errors</span><span class="o">.</span><span class="n">add_to_base</span><span class="p">(</span><span class="s2">&quot;Images should be smaller than 5 MB in size&quot;</span><span class="p">)</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+        
+    <span class="k">end</span>
+  <span class="k">end</span>
 
-<pre><code>             :storage =&gt; :file_system, 
-             :max_size =&gt; 5.megabytes,
-             :resize_to =&gt; '320x200&gt;',
-             :thumbnails =&gt; { :thumb =&gt; '100x100&gt;', :widget =&gt; "262x262&gt;" },
-             :processor =&gt; MiniMagick
-</code></pre>
+<span class="k">end</span>
+</pre>
+</div>
 
-<p>  def validate</p>
-
-<pre><code>errors.add_to_base("You must choose a file to upload") unless self.filename
-
-unless self.filename == nil
-
-  # Images should only be GIF, JPEG, or PNG
-  [:content_type].each do |attr_name|
-    enum = attachment_options[attr_name]
-    unless enum.nil? || enum.include?(send(attr_name))
-      errors.add_to_base("You can only upload images (GIF, JPEG, or PNG)")
-    end
-  end
-
-  # Images should be less than 5 MB
-  [:size].each do |attr_name|
-    enum = attachment_options[attr_name]
-    unless enum.nil? || enum.include?(send(attr_name))
-      errors.add_to_base("Images should be smaller than 5 MB in size")
-    end
-  end
-
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>end
-&lt;/filter:jscode></p>
 
 <p>To get started, let's drop the <code>validates_as_attachment</code> method. Or, more specifically, try extracting its useful parts into something more useful.</p>
 

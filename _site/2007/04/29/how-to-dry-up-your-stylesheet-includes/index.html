@@ -7,6 +7,9 @@
 </head>
 <body>
 
+
+<h1>How to DRY up your stylesheet includes</h1>
+
 <div id="post">
 <p>Here's a helper to automatically include stylesheets in your layouts.</p>
 
@@ -24,59 +27,59 @@
 
 <p>To install, just add this method to your helpers/application_helpers.rb</p>
 
-<p>&lt;filter:jscode lang="ruby">
-def stylesheets
-  stylesheets = ["application", "#{controller.controller_name}", "ie7", "ie6"]
-  stylesheets.collect! do |name|</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">stylesheets</span>
+  <span class="n">stylesheets</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;application&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">controller</span><span class="o">.</span><span class="n">controller_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;ie7&quot;</span><span class="p">,</span> <span class="s2">&quot;ie6&quot;</span><span class="o">]</span>
+  <span class="n">stylesheets</span><span class="o">.</span><span class="n">collect!</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="o">|</span> 
+    <span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">exist?</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">RAILS_ROOT</span><span class="si">}</span><span class="s2">/public/stylesheets/</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">.css&quot;</span><span class="p">)</span>
+      <span class="k">case</span> <span class="nb">name</span>
+      <span class="k">when</span> <span class="s2">&quot;ie7&quot;</span>
+        <span class="s2">&quot;&lt;!--[if IE 7]&gt;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">stylesheet_link_tag</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;![endif]--&gt;&quot;</span>
+      <span class="k">when</span> <span class="s2">&quot;ie6&quot;</span>
+        <span class="s2">&quot;&lt;!--[if IE 6]&gt;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">stylesheet_link_tag</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;![endif]--&gt;&quot;</span>
+      <span class="k">else</span>
+        <span class="n">stylesheet_link_tag</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="n">stylesheets</span><span class="o">.</span><span class="n">compact</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">end</span>
+</pre>
+</div>
 
-<pre><code>if File.exist?("#{RAILS_ROOT}/public/stylesheets/#{name}.css")
-  case name
-  when "ie7"
-    "&lt;!--[if IE 7]&gt;\n" + stylesheet_link_tag(name) + "\n&lt;![endif]--&gt;"
-  when "ie6"
-    "&lt;!--[if IE 6]&gt;\n" + stylesheet_link_tag(name) + "\n&lt;![endif]--&gt;"
-  else
-    stylesheet_link_tag(name)
-  end
-end
-</code></pre>
-
-<p>  end
-  stylesheets.compact.join("\n")
-end
-&lt;/filter:jscode></p>
 
 <p>Then add <code>&lt;%= stylesheets %&gt;</code> to your layout(s):</p>
 
-<p>&lt;filter:jscode lang="html">
-<html>
-<head>
-<title>the.rails.ist</title>
-&lt;%= stylesheets %>
-</head>
-<body>
-</body>
-</html>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>the.rails.ist<span class="nt">&lt;/title&gt;</span>
+<span class="err">&lt;</span>%= stylesheets %&gt;
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre>
+</div>
+
 
 <p>When the template is rendered, you'll get this:</p>
 
-<p>&lt;filter:jscode lang="html">
-<html>
-<head>
-<title>the.rails.ist</title>
-<link href="/stylesheets/application.css?1170968897" />
-<!--[if IE 7]>
-<link href="/stylesheets/ie7.css?1170968897" />
-&lt;![endif]-->
-<!--[if IE 6]>
-<link href="/stylesheets/ie6.css?1170968897" />
-&lt;![endif]-->
-</head>
-<body>
-</body>
-</html>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>the.rails.ist<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/stylesheets/application.css?1170968897&quot;</span> <span class="nt">/&gt;</span>
+<span class="c">&lt;!--[if IE 7]&gt;</span>
+<span class="c">&lt;link href=&quot;/stylesheets/ie7.css?1170968897&quot; /&gt;</span>
+<span class="c">&lt;![endif]--&gt;</span>
+<span class="c">&lt;!--[if IE 6]&gt;</span>
+<span class="c">&lt;link href=&quot;/stylesheets/ie6.css?1170968897&quot; /&gt;</span>
+<span class="c">&lt;![endif]--&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre>
+</div>
+
 
 <p>Note: to keep the example code clean, I removed the media, rel, and type attributes that Rails normally includes with stylesheet links. But, when you run the helper for real, they'll be included.</p>
 

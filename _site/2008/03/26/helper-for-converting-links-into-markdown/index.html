@@ -7,18 +7,22 @@
 </head>
 <body>
 
+
+<h1>Helper for converting links into Markdown</h1>
+
 <div id="post">
 <p>I'm working on importing lots of legacy content into Rails, so I came up with this little method to convert old-school link formats (like <a href="http://en.wikipedia.org/wiki/BBCode">BBCode</a> and HTML) into <a href="http://daringfireball.net/projects/markdown/">Markdown</a>.</p>
 
-<p>&lt;filter:jscode lang="ruby">
-def convert_links_to_markdown(text)
-  # [url=http://google.com]Google[/url]
-  text = text.gsub(/([url\=)(.<em>?)(])(.</em>?)([\/url])/, ('<a href="\2">\4</a>'))</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">convert_links_to_markdown</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+  <span class="c1"># [url=http://google.com]Google[/url]</span>
+  <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/(\[url\=)(.*?)(\])(.*?)(\[\/url\])/</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;[\4](\2)&#39;</span><span class="p">))</span>
+    
+  <span class="c1"># &lt;a href=&quot;http://google.com&quot;&gt;Google&lt;/a&gt;</span>
+  <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/(&lt;a href=&quot;)(.*?)(&quot;&gt;)(.*?)(&lt;\/a&gt;)/</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;[\4](\2)&#39;</span><span class="p">))</span>
+<span class="k">end</span>
+</pre>
+</div>
 
-<p>  # <a href="http://google.com">Google</a>
-  text = text.gsub(/(<a href=")(.*?)(">)(.*?)(&lt;\/a>)/, ('<a href="\2">\4</a>'))
-end
-&lt;/filter:jscode></p>
 
 <p>Here's a <a href="http://pastie.caboo.se/170623">Pastie version</a>, as well. (Special thanks to <a href="http://railsontherun.com/">Matt Aimonetti</a> for fixing a bug in the Regexp.)</p>
 

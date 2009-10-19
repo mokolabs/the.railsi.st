@@ -7,6 +7,9 @@
 </head>
 <body>
 
+
+<h1>Styler: Stylesheets made easy</h1>
+
 <div id="post">
 <p>Styler is designed to DRY up the process of including and generating stylesheets, so you can think less about stylesheet configuration and more about styling.</p>
 
@@ -15,27 +18,29 @@
 
 <p>To use Styler, just update your layout(s) with this code:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-<head>
-<title>the.rails.ist</title>
-&lt;%= stylesheets %>
-</head>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>the.rails.ist<span class="nt">&lt;/title&gt;</span>
+<span class="err">&lt;</span>%= stylesheets %&gt;
+<span class="nt">&lt;/head&gt;</span>
+</pre>
+</div>
+
 
 <p>Styler will then include your stylesheets automatically:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-<head>
-<title>the.rails.ist</title>
-<link href="/stylesheets/application.css?1170968897" />
-<!--[if IE 7]>
-<link href="/stylesheets/ie7.css?1170968897" />
-&lt;![endif]-->
-<!--[if IE 6]>
-<link href="/stylesheets/ie6.css?1170968897" />
-&lt;![endif]-->
-</head>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>the.rails.ist<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/stylesheets/application.css?1170968897&quot;</span> <span class="nt">/&gt;</span>
+<span class="c">&lt;!--[if IE 7]&gt;</span>
+<span class="c">&lt;link href=&quot;/stylesheets/ie7.css?1170968897&quot; /&gt;</span>
+<span class="c">&lt;![endif]--&gt;</span>
+<span class="c">&lt;!--[if IE 6]&gt;</span>
+<span class="c">&lt;link href=&quot;/stylesheets/ie6.css?1170968897&quot; /&gt;</span>
+<span class="c">&lt;![endif]--&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+</pre>
+</div>
+
 
 <p>Styler will also dynamically include stylesheets for each of your controllers (if such stylesheets are present), so you can keep your styles organized into logical sections.</p>
 
@@ -60,10 +65,11 @@
 
 <p>Conventions are great, but need to add your own stylesheets?</p>
 
-<p>&lt;filter:jscode lang="ruby">
-&lt;%= stylesheets :include => "reset" %>
-&lt;%= stylesheets :include => ["reset", "fonts"] %>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="sx">%= stylesheets :include =</span><span class="o">&gt;</span> <span class="s2">&quot;reset&quot;</span> <span class="sx">%&gt;</span>
+<span class="sx">&lt;%= stylesheets :include =&gt;</span> <span class="o">[</span><span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="s2">&quot;fonts&quot;</span><span class="o">]</span> <span class="o">%&gt;</span>
+</pre>
+</div>
+
 
 <h2>Use nested stylesheets (optional)</h2>
 
@@ -85,14 +91,20 @@
 
 <p>To use the generator, run this command in your terminal:</p>
 
-<p>&lt;filter:jscode lang="ruby">script/generate stylesheets&lt;/filter:jscode></p>
+<div class="highlight"><pre>script/generate stylesheets
+</pre>
+</div>
+
 
 <p>If you add a new controller, just run the generator again and a new stylesheet for the controller will be created. (Styler will safely ignore any existing stylesheets.)</p>
 
 <h2>Install</h2>
 
 
-<p>&lt;filter:jscode lang="ruby">script/plugin install git://github.com/mokolabs/styler.git&lt;/filter:jscode></p>
+<div class="highlight"><pre>script/plugin install git://github.com/mokolabs/styler.git
+</pre>
+</div>
+
 
 </div>
 

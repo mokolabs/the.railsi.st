@@ -1,4 +1,4 @@
-{% highlight ruby %}--- 
+--- 
 layout: post
 title: How to DRY up your stylesheet includes
 ---

@@ -7,6 +7,9 @@
 </head>
 <body>
 
+
+<h1>How to use Haml with ActionMailer</h1>
+
 <div id="post">
 <p>Poor ActionMailer. It just doesn't get enough love.</p>
 
@@ -18,9 +21,10 @@
 
 <p>Just drop this into your environment.rb and restart:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-ActionMailer::Base.register_template_extension('haml')
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="no">ActionMailer</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">register_template_extension</span><span class="p">(</span><span class="s1">&#39;haml&#39;</span><span class="p">)</span>
+</pre>
+</div>
+
 
 <p>This should work on Rails 1.2.4 and up.</p>
 

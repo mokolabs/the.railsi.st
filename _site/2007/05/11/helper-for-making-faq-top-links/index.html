@@ -2,27 +2,32 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title>the.rails.ist @ Helper for making FAQ ‘top’ links</title>
+<title>the.rails.ist @ Helper for making FAQ top links</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </head>
 <body>
+
+
+<h1>Helper for making FAQ top links</h1>
 
 <div id="post">
 <p>Here's a simple helper for adding top-style links to a long frequently asked questions document.</p>
 
 <p>Add the code below to your helpers/application_helpers.rb file.</p>
 
-<p>&lt;filter:jscode lang="ruby">
-def top
-  '<a href="#" class="top" onclick="window.scrollTo(0,0);return false;">top</a>'
-end
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">top</span>
+  <span class="s1">&#39;&lt;a href=&quot;#&quot; class=&quot;top&quot; onclick=&quot;window.scrollTo(0,0);return false;&quot;&gt;top&lt;/a&gt;&#39;</span>
+<span class="k">end</span>
+</pre>
+</div>
+
 
 <p>Then add <code>&lt;%= top %&gt;</code> to each FAQ answer:</p>
 
-<p>&lt;filter:jscode lang="html">
-<h2><a>Does Rails scale?</a>&lt;%= top %></h2>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;h2&gt;&lt;a&gt;</span>Does Rails scale?<span class="nt">&lt;/a&gt;</span><span class="err">&lt;</span>%= top %&gt;<span class="nt">&lt;/h2&gt;</span>
+</pre>
+</div>
+
 
 <p>For extra credit, style and tweak the markup to your liking.</p>
 

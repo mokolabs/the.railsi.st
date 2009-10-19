@@ -7,29 +7,31 @@
 </head>
 <body>
 
+
+<h1>Headliner: DRY up your page titles</h1>
+
 <div id="post">
 <p>Normally, if your Rails application has lots of actions and a shared layout, you might find yourself setting custom page title names in your controllers.</p>
 
 <p>Here's an example:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-class PagesController &lt; ApplicationController
-  def about</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">PagesController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">about</span>
+    <span class="vi">@title</span> <span class="o">=</span> <span class="s2">&quot;About us&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+</div>
 
-<pre><code>@title = "About us"
-</code></pre>
-
-<p>  end
-end
-&lt;/filter:jscode></p>
 
 <p>Then, in your main layout, you might have something like this:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-<head>
-<title>My website&lt;% if @title %>: &lt;%= @title %>&lt;% end %></title>
-</head
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>My website<span class="err">&lt;</span>% if @title %&gt;: <span class="err">&lt;</span>%= @title %&gt;<span class="err">&lt;</span>% end %&gt;<span class="nt">&lt;/title&gt;</span>
+<span class="err">&lt;</span>/head
+</pre>
+</div>
+
 
 <p>This works okay... but page titles don't really belong in controllers, do they?</p>
 
@@ -40,26 +42,31 @@ end
 
 <p>First, add this code to your main layout:</p>
 
-<p>&lt;filter:jscode lang="ruby">
-<head>
-&lt;%= title :site => "My website" %>
-</head>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="sx">%= title :site =</span><span class="o">&gt;</span> <span class="s2">&quot;My website&quot;</span> <span class="sx">%&gt;</span>
+<span class="sx">&lt;/head&gt;</span>
+</pre>
+</div>
+
 
 <p>Then, to set the page title, add this to each of your views:</p>
 
-<p>&lt;filter:jscode lang="html"><h1>&lt;%= title "My page title" %></h1>&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;h1&gt;</span><span class="err">&lt;</span>%= title &quot;My page title&quot; %&gt;<span class="nt">&lt;/h1&gt;</span>
+</pre>
+</div>
+
 
 <p>When views are rendered, the page title will be included in the right spots:</p>
 
-<p>&lt;filter:jscode lang="html">
-<head>
-<title>My website | My page title</title>
-</head>
-<body>
-<h1>My page title</h1>
-</body>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>My website | My page title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>My page title<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</pre>
+</div>
+
 
 <h2>Options</h2>
 
@@ -77,32 +84,40 @@ end
 
 <p>And here are a few examples to give you ideas.</p>
 
-<p>&lt;filter:jscode lang="ruby">
-&lt;%= title :separator => "&mdash;" %>
-&lt;%= title :prefix => false, :separator => ":" %>
-&lt;%= title :lowercase => true %>
-&lt;%= title :reverse => true, :prefix => false %>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="sx">%= title :separator =</span><span class="o">&gt;</span> <span class="s2">&quot;&amp;mdash;&quot;</span> <span class="sx">%&gt;</span>
+<span class="sx">&lt;%= title :prefix =&gt;</span> <span class="kp">false</span><span class="p">,</span> <span class="ss">:separator</span> <span class="o">=&gt;</span> <span class="s2">&quot;:&quot;</span> <span class="sx">%&gt;</span>
+<span class="sx">&lt;%= title :lowercase =&gt;</span> <span class="kp">true</span> <span class="sx">%&gt;</span>
+<span class="sx">&lt;%= title :reverse =&gt;</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">:prefix</span> <span class="o">=&gt;</span> <span class="kp">false</span> <span class="o">%&gt;</span>
+</pre>
+</div>
+
 
 <h2>Dealing with special pages</h2>
 
 
 <p>How do you set the page title without showing it in the view?</p>
 
-<p>&lt;filter:jscode lang="html">&lt;% title "My page title" %>&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="sx">% title </span><span class="s2">&quot;My page title&quot;</span> <span class="o">%&gt;</span>
+</pre>
+</div>
+
 
 <p>What if your view headline is different from your page title?</p>
 
-<p>&lt;filter:jscode lang="html">&lt;%= title "My page title", "My headline" %>&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="o">&lt;%=</span> <span class="n">title</span> <span class="s2">&quot;My page title&quot;</span><span class="p">,</span> <span class="s2">&quot;My headline&quot;</span> <span class="o">%&gt;</span>
+</pre>
+</div>
+
 
 <h2>Mr. T says, &#8216;Use my method, fool!&#8217;</h2>
 
 
 <p>Just like ERB's <a href="http://www.ruby-doc.org/stdlib/libdoc/erb/rdoc/">HTML safe method</a>, you can invoke Headliner with a single letter alias.</p>
 
-<p>&lt;filter:jscode lang="html">
-<h1>&lt;%=t "My page title" %></h1>
-&lt;/filter:jscode></p>
+<div class="highlight"><pre><span class="nt">&lt;h1&gt;</span><span class="err">&lt;</span>%=t &quot;My page title&quot; %&gt;<span class="nt">&lt;/h1&gt;</span>
+</pre>
+</div>
+
 
 <h2>How does it work?</h2>
 
@@ -117,7 +132,10 @@ end
 <h2>Install</h2>
 
 
-<p>&lt;filter:jscode lang="ruby">script/plugin install git://github.com/mokolabs/headliner.git&lt;/filter:jscode></p>
+<div class="highlight"><pre>script/plugin install git://github.com/mokolabs/headliner.git
+</pre>
+</div>
+
 
 </div>
 

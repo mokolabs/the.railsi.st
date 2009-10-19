@@ -7,18 +7,23 @@
 </head>
 <body>
 
+
+<h1>Problems installing restful_auth?</h1>
+
 <div id="post">
 <p>When installing <code>restful_authentication</code>, you run this command:</p>
 
-<p>&lt;filter:jscode>
-patrick$: script/generate authenticated user sessions --include-activation
-&lt;/filter:jscode></p>
+<div class="highlight"><pre>patrick<span class="nv">$:</span> script/generate authenticated user sessions --include-activation
+</pre>
+</div>
+
 
 <p>And get this error.</p>
 
-<p>&lt;filter:jscode>
-invalid option: --include-activation
-&lt;/filter:jscode></p>
+<div class="highlight"><pre>invalid option: --include-activation
+</pre>
+</div>
+
 
 <p>What's wrong with this picture? Remove <code>acts_as_authenticated</code>. You can't use both plugins at the same time.</p>
 

@@ -2,31 +2,36 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title>the.rails.ist @ Don’t use ‘flash’ for a controller method name</title>
+<title>the.rails.ist @ Don't use flash for a controller method name</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </head>
 <body>
 
+
+<h1>Don't use flash for a controller method name</h1>
+
 <div id="post">
 <p>While working on a <a href="http://chumby.com/developers/flash">Flash developers page</a> for the Chumby website, I kept getting this error:</p>
 
-<p>&lt;macro:code lang=”ruby”>
-Error in DevelopersController#flash</p>
+<div class="highlight"><pre><span class="no">Error</span> <span class="k">in</span> <span class="no">DevelopersController</span><span class="c1">#flash</span>
 
-<p>You have a nil object when you didn't expect it!
-The error occured while evaluating nil.sweep
-&lt;/macro:code></p>
+<span class="no">You</span> <span class="n">have</span> <span class="n">a</span> <span class="kp">nil</span> <span class="n">object</span> <span class="k">when</span> <span class="n">you</span> <span class="n">didn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">expect</span> <span class="n">it!</span>
+<span class="no">The</span> <span class="n">error</span> <span class="n">occured</span> <span class="k">while</span> <span class="n">evaluating</span> <span class="kp">nil</span><span class="o">.</span><span class="n">sweep</span>
+</pre>
+</div>
+
 
 <p>Pretty puzzling at first. The method was empty, so what could be wrong here?</p>
 
-<p>&lt;filter:jscode lang="ruby">
-class DevelopersController &lt; ApplicationController</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">DevelopersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
 
-<p>  def flash
-  end</p>
+  <span class="k">def</span> <span class="nf">flash</span>
+  <span class="k">end</span>
 
-<p>end
-&lt;/filter:jscode></p>
+<span class="k">end</span>
+</pre>
+</div>
+
 
 <p>Eventually... it hit me! ActionController has its own <a href="http://api.rubyonrails.org/classes/ActionController/Flash.html">flash method</a> which is used to display flash notices and warnings.</p>
 

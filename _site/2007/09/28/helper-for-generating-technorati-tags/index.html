@@ -7,25 +7,26 @@
 </head>
 <body>
 
+
+<h1>Helper for generating Technorati tags</h1>
+
 <div id="post">
 <p>Need to support <a href="http://technorati.com/help/tags.html">Technorati tags</a> in your application?</p>
 
 <p>Here's a helper that does all the work. Just give it a list of tags and the helper will spit out all the necessary html for Technorati to index your content. (When you deploy, don't forget to <a href="http://technorati.com/ping/">ping them</a> so they index you.)</p>
 
-<p>&lt;filter:jscode lang="ruby">
-def technorati_tags_for(model)
-  tag_links = Array.new
-  model.tags.split(',').sort.each do |tag|
-  tag_links &lt;&lt; '<a href="http://technorati.com/tag/' +</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">technorati_tags_for</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+  <span class="n">tag_links</span> <span class="o">=</span> <span class="nb">Array</span><span class="o">.</span><span class="n">new</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">tag</span><span class="o">|</span>
+  <span class="n">tag_links</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;&lt;a href=&quot;http://technorati.com/tag/&#39;</span> <span class="o">+</span> 
+                <span class="n">tag</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;+&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&quot; rel=&quot;tag&quot;&gt;&#39;</span> <span class="o">+</span> 
+                <span class="n">tag</span> <span class="o">+</span> <span class="s1">&#39;&lt;/a&gt;&#39;</span>
+  <span class="k">end</span>
+  <span class="n">tag_links</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">end</span>
+</pre>
+</div>
 
-<pre><code>            tag.split(" ").join("+") + '" rel="tag"&gt;' + 
-            tag + '&lt;/a&gt;'
-</code></pre>
-
-<p>  end
-  tag_links.join("\n")
-end
-&lt;/filter:jscode></p>
 
 <h2>Assumptions</h2>
 
