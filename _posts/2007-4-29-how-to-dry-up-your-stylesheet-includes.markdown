@@ -76,6 +76,6 @@ Want to go further?
 + Add <code>"#{controller.controller_name}_#{controller.action_name}"</code> to the list of stylesheets. This will allow you to include stylesheets that are specific to a single action.
 + Need to include a stylesheet for Lightbox or Redbox? Same deal... just update the stylesheet list (and make your any new stylesheets are copied into your <code>public/stylesheets/</code> directory).
 
-Stay tuned... I'll be releasing a plugin based on this helper soon. UPDATE: the plugin <a href="/2007/5/3/styler-stylesheets-made-easy">has been released</a>.
+Stay tuned... I'll be releasing a plugin based on this helper soon. UPDATE: the plugin <a href="/2007/05/03/styler-stylesheets-made-easy">has been released</a>.
 
 (This code is loosely based on <a href="http://www.bigbold.com/snippets/posts/show/509">this snippet</a>.)

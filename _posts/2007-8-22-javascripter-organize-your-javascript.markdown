@@ -2,7 +2,7 @@
 layout: post
 title: "Javascripter: Organize your javascript"
 ---
-Just like [Styler](http://the.railsi.st/2007/5/3/styler-stylesheets-made-easy), you can use Javascripter to keep javascript organized in your application.
+Just like [Styler](/2007/05/03/styler-stylesheets-made-easy), you can use Javascripter to keep javascript organized in your application.
 
 <h2>Usage</h2>
 
