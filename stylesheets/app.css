@@ -276,7 +276,7 @@ pre {
   font-family: Georgia, Times, serif;
   padding: 0 10px 0 0;
   text-align: right;
-  width: 145px;
+  width: 125px;
 }
 
 
@@ -286,4 +286,5 @@ pre {
   color: #666;
   font-family: Georgia, Times, serif;
   font-size: 16px;
+  margin: 16px 0;
 }
