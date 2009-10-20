@@ -1,0 +1,27 @@
+---
+layout: nil
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>the.railsi.st</title>
+ <link href="http://the.railsi.st/atom.xml" rel="self"/>
+ <link href="http://the.railsi.st/"/>
+ <updated>{{ site.time | date_to_xmlschema }}</updated>
+ <id>http://the.railsi.st.com/</id>
+ <author>
+   <name>Patrick Crowley</name>
+   <email>patrick@mokolabs.com</email>
+ </author>
+
+ {% for post in site.posts %}
+ <entry>
+   <title>{{ post.title }}</title>
+   <link href="http://the.railsi.st{{ post.url }}"/>
+   <updated>{{ post.date | date_to_xmlschema }}</updated>
+   <id>http://the.railsi.st.com{{ post.id }}</id>
+   <content type="html">{{ post.content | xml_escape }}</content>
+ </entry>
+ {% endfor %}
+ 
+</feed>
