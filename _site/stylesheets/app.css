@@ -59,7 +59,7 @@ h1 {
   font-family: Georgia, Times, serif;
   font-size: 30px;
   font-weight: normal;
-  margin: 18px 0;
+  margin: 22px 0 18px;
 }
 
 h2 {
@@ -77,6 +77,7 @@ li {
 }
 
 p {
+  line-height: 18px;
   margin: 12px 0;
 }
 
@@ -116,11 +117,12 @@ a:hover {
 }
 
 #sidebar {
+  border-left: 1px dotted #DDDDDD;
   float: right;
   font-size: 14px;
-  height: 300px;
-  margin: 0 0 0 40px;
-  width: 300px;
+  margin: 0 0 0 15px;
+  padding-left: 15px;
+  width: 319px;
 }
 
 
@@ -207,17 +209,19 @@ a:hover {
   background: none;
 }
 
-#sidebar p#merbcamp a {
-  border: none;
-}
-
 #sidebar p#wwr {
   margin-top: 15px;
   margin-bottom: 15px;
+  float: left;
 }
 
 #sidebar p#wwr a {
   border: none;
+}
+
+#sidebar p#feedburner {
+  float: left;
+  margin: 21px 0 0 15px;
 }
 
 #sidebar p#feedburner a {
@@ -246,12 +250,13 @@ pre {
 }
 
 .headline {
-  margin: 14px 0;
+  margin: 24px 0;
 }
 
 .headline h2 {
   display: table-cell;
   font-family: Georgia, Times, serif;
+  font-size: 20px;
   font-weight: normal;
 }
 
@@ -267,7 +272,18 @@ pre {
 .headline .date {
   color: #666;
   display: table-cell;
-  text-align: right;
+  font-size: 20px;
+  font-family: Georgia, Times, serif;
   padding: 0 10px 0 0;
-  width: 100px;
+  text-align: right;
+  width: 145px;
+}
+
+
+/* PAGE */
+
+#post .date {
+  color: #666;
+  font-family: Georgia, Times, serif;
+  font-size: 16px;
 }
