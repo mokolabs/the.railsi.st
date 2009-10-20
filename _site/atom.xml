@@ -1,0 +1,1142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>the.railsi.st</title>
+ <link href="http://the.railsi.st/atom.xml" rel="self"/>
+ <link href="http://the.railsi.st/"/>
+ <updated>2009-10-19T22:58:34-07:00</updated>
+ <id>http://the.railsi.st.com/</id>
+ <author>
+   <name>Patrick Crowley</name>
+   <email>patrick@mokolabs.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>Saying goodbye to Subversion</title>
+   <link href="http://the.railsi.st/2009/07/09/saying-goodbye-to-subversion/"/>
+   <updated>2009-07-09T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2009/07/09/saying-goodbye-to-subversion</id>
+   <content type="html">&lt;p&gt;My plugins have been &lt;a href=&quot;http://github.com/mokolabs/&quot;&gt;living on Github&lt;/a&gt; for over a year, so I think it's time to kill off my old Subversion repo.&lt;/p&gt;
+
+&lt;p&gt;If you need to reinstall my plugins, use these git-enabled links. (I've also updated their respective pages here.)&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;script/plugin install git://github.com/mokolabs/headliner.git
+script/plugin install git://github.com/mokolabs/styler.git
+script/plugin install git://github.com/mokolabs/javascript.git
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Apologies to anyone who's still using svn. Hopefully, you'll learn the ways of the force soon.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Sass version of Eric Meyer's Reset</title>
+   <link href="http://the.railsi.st/2008/06/13/sass-version-of-eric-meyers-reset/"/>
+   <updated>2008-06-13T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2008/06/13/sass-version-of-eric-meyers-reset</id>
+   <content type="html">&lt;p&gt;Here's a Sass version of &lt;a href=&quot;http://railsontherun.com/&quot;&gt;Eric Meyer's CSS reset&lt;/a&gt; (the &quot;Resetting Again&quot; version).&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;// Reset
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td
+  :margin 0
+  :padding 0
+  :border 0
+  :outline 0
+  :font-size 100%
+  :vertical-align baseline
+  :background transparent
+
+body
+  :line-height 1
+
+ol, ul
+  :list-style none
+
+blockquote, q
+  :quotes none
+
+// remember to define focus styles!
+\:focus 
+  :outline 0
+
+// remember to highlight inserts somehow!
+ins
+  :text-decoration none
+
+del
+  :text-decoration line-through
+
+// tables still need &amp;#39;cellspacing=&amp;quot;0&amp;quot;&amp;#39; in the markup
+table
+  :border-collapse collapse
+  :border-spacing 0
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Just drop this into the top of your application.sass file, and you're good to go!&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Helper for converting links into Markdown</title>
+   <link href="http://the.railsi.st/2008/03/26/helper-for-converting-links-into-markdown/"/>
+   <updated>2008-03-26T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2008/03/26/helper-for-converting-links-into-markdown</id>
+   <content type="html">&lt;p&gt;I'm working on importing lots of legacy content into Rails, so I came up with this little method to convert old-school link formats (like &lt;a href=&quot;http://en.wikipedia.org/wiki/BBCode&quot;&gt;BBCode&lt;/a&gt; and HTML) into &lt;a href=&quot;http://daringfireball.net/projects/markdown/&quot;&gt;Markdown&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;convert_links_to_markdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# [url=http://google.com]Google[/url]&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/(\[url\=)(.*?)(\])(.*?)(\[\/url\])/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;[\4](\2)&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    
+  &lt;span class=&quot;c1&quot;&gt;# &amp;lt;a href=&amp;quot;http://google.com&amp;quot;&amp;gt;Google&amp;lt;/a&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/(&amp;lt;a href=&amp;quot;)(.*?)(&amp;quot;&amp;gt;)(.*?)(&amp;lt;\/a&amp;gt;)/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;[\4](\2)&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Here's a &lt;a href=&quot;http://pastie.caboo.se/170623&quot;&gt;Pastie version&lt;/a&gt;, as well. (Special thanks to &lt;a href=&quot;http://railsontherun.com/&quot;&gt;Matt Aimonetti&lt;/a&gt; for fixing a bug in the Regexp.)&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Roll your own attachment_fu validations</title>
+   <link href="http://the.railsi.st/2007/11/27/roll-your-own-attachment_fu-validations/"/>
+   <updated>2007-11-27T00:00:00-08:00</updated>
+   <id>http://the.railsi.st.com/2007/11/27/roll-your-own-attachment_fu-validations</id>
+   <content type="html">&lt;p&gt;Lots of folks use attachment_fu to handle image uploads. It handles all the dirty work of uploading files, integrates with Amazon S3, and even supports all the different image libraries.&lt;/p&gt;
+
+&lt;p&gt;Which is awesome... but it kinda sucks at validating files. Take a pretty typical Photo class:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Photo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;has_attachment&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:content_type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                 &lt;span class=&quot;ss&quot;&gt;:storage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:file_system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                 &lt;span class=&quot;ss&quot;&gt;:max_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;megabytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:resize_to&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;320x200&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:thumbnails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:thumb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;100x100&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:widget&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;262x262&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:processor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MiniMagick&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;validates_as_attachment&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;What happens when you forget to select a file before uploading?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Content type can't be blank&lt;/li&gt;
+&lt;li&gt;Content type is not included in the list&lt;/li&gt;
+&lt;li&gt;Size can't be blank&lt;/li&gt;
+&lt;li&gt;Size is not included in the list&lt;/li&gt;
+&lt;li&gt;Filename can't be blank&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;So, let's try uploading a Word document:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Content type is not included in the list&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Or a file that's too big:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Size is not included in the list&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Let's try it again, but in English:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Photo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;has_attachment&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:content_type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                 &lt;span class=&quot;ss&quot;&gt;:storage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:file_system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                 &lt;span class=&quot;ss&quot;&gt;:max_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;megabytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:resize_to&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;320x200&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:thumbnails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:thumb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;100x100&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:widget&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;262x262&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:processor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MiniMagick&lt;/span&gt;
+  
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;validate&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;errors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_to_base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;You must choose a file to upload&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;
+      
+      &lt;span class=&quot;c1&quot;&gt;# Images should only be GIF, JPEG, or PNG&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:content_type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attachment_options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nil?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;errors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_to_base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;You can only upload images (GIF, JPEG, or PNG)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+      
+      &lt;span class=&quot;c1&quot;&gt;# Images should be less than 5 MB&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attachment_options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nil?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;errors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_to_base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Images should be smaller than 5 MB in size&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+        
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;To get started, let's drop the &lt;code&gt;validates_as_attachment&lt;/code&gt; method. Or, more specifically, try extracting its useful parts into something more useful.&lt;/p&gt;
+
+&lt;p&gt;Since we're dropping attachment_fu's validations, we need to roll our own validations for the Photo class. You can do this by declaring a &lt;code&gt;validate&lt;/code&gt; method in your class, and adding appropriate logic.&lt;/p&gt;
+
+&lt;p&gt;We can also use &lt;code&gt;errors.add_to_base&lt;/code&gt; to get total control over your validation messages. By default, Rails pair the model attribute name with an error message (&quot;person&quot; + &quot;is missing an ear&quot;), but sometimes this can lead to awkward phrases (&quot;person is empty&quot;).&lt;/p&gt;
+
+&lt;p&gt;You'll need to custom this for your application, of course, but this post should give you some examples.&lt;/p&gt;
+
+&lt;p&gt;(I'm planning to follow this blog post up with a series of posts about improving validation messages.)&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>New talk: Haml and Sass in 15 minutes</title>
+   <link href="http://the.railsi.st/2007/11/20/new-talk-haml-and-sass-in-15-minutes/"/>
+   <updated>2007-11-20T00:00:00-08:00</updated>
+   <id>http://the.railsi.st.com/2007/11/20/new-talk-haml-and-sass-in-15-minutes</id>
+   <content type="html">&lt;p&gt;SD Ruby just posted &lt;a href=&quot;http://sdruby.org/podcast/38&quot;&gt;my talk on Haml and Sass&lt;/a&gt; (given at this month's meeting).&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://haml.hamptoncatlin.com/docs/haml&quot;&gt;Haml&lt;/a&gt; is a drop-in replacement for embedded ruby templates that has really helped me tame wild and crazy view code (especially on bigger apps). &lt;a href=&quot;http://haml.hamptoncatlin.com/docs/sass&quot;&gt;Sass&lt;/a&gt; is sorta like Haml's kid brother. It transforms your CSS into something that feels more like Ruby. Cleaner syntax, dynamic variables and logic, auto-nesting. All good stuff.&lt;/p&gt;
+
+&lt;p&gt;If you've been on the fence about Haml, check out this talk.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>How to use Haml with ActionMailer</title>
+   <link href="http://the.railsi.st/2007/11/15/how-to-use-haml-with-actionmailer/"/>
+   <updated>2007-11-15T00:00:00-08:00</updated>
+   <id>http://the.railsi.st.com/2007/11/15/how-to-use-haml-with-actionmailer</id>
+   <content type="html">&lt;p&gt;Poor ActionMailer. It just doesn't get enough love.&lt;/p&gt;
+
+&lt;p&gt;If you try using &lt;a href=&quot;http://haml.hamptoncatlin.com/&quot;&gt;Haml&lt;/a&gt; in your email templates, Rails will ignore your pretty little Haml code.&lt;/p&gt;
+
+&lt;p&gt;Why does this happen? Because, by default, ActionMailer only recognizes .erb or .rhtml extensions with templates that use a specific mime type (example: &lt;code&gt;forgot_password.text.html.erb&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;But thanks to &lt;a href=&quot;http://dev.rubyonrails.org/ticket/7534&quot;&gt;changest 7534&lt;/a&gt;, ActionMailer can now use Haml too.&lt;/p&gt;
+
+&lt;p&gt;Just drop this into your environment.rb and restart:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;ActionMailer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;register_template_extension&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;haml&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;This should work on Rails 1.2.4 and up.&lt;/p&gt;
+
+&lt;h2&gt;Extra credit&lt;/h2&gt;
+
+
+&lt;p&gt;Don't use HTML email unless you really need it. You'll upset users and go crazy trying to make things work in a hundred email clients. Stick to text unless HTML can really add substantial value to your notifications.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>New SD Ruby podcast episodes</title>
+   <link href="http://the.railsi.st/2007/11/14/new-sd-ruby-podcast-episodes/"/>
+   <updated>2007-11-14T00:00:00-08:00</updated>
+   <id>http://the.railsi.st.com/2007/11/14/new-sd-ruby-podcast-episodes</id>
+   <content type="html">&lt;p&gt;In case you don't subscribe to the &lt;a href=&quot;http://sdruby.org/&quot;&gt;SD Ruby podcast&lt;/a&gt;, we just uploaded a huge batch of fresh episodes.&lt;/p&gt;
+
+&lt;p&gt;We've got talks on &lt;a href=&quot;http://sdruby.org/podcast/26&quot;&gt;ActsAsSolr&lt;/a&gt;, &lt;a href=&quot;http://sdruby.org/podcast/33&quot;&gt;Edge Rails&lt;/a&gt;, &lt;a href=&quot;http://sdruby.org/podcast/31&quot;&gt;Seaside&lt;/a&gt;&lt;/a&gt;, &lt;a href=&quot;http://sdruby.org/podcast/35&quot;&gt;ActiveRecord Backup &amp;amp; Mimetypefu&lt;/a&gt;, &lt;a href=&quot;http://sdruby.org/podcast/34&quot;&gt;JRuby&lt;/a&gt;, &lt;a href=&quot;http://sdruby.org/podcast/25&quot;&gt;AJAX CSS stars&lt;/a&gt;, &lt;a href=&quot;http://sdruby.org/podcast/24&quot;&gt;Amazon SQS&lt;/a&gt;, &lt;a href=&quot;http://sdruby.org/podcast/32&quot;&gt;Capistrano&lt;/a&gt;, and more.&lt;/p&gt;
+
+&lt;p&gt;There's also a 20 minute talk on &lt;a href=&quot;http://sdruby.org/podcast/27&quot;&gt;Headliner and Styler&lt;/a&gt; that I gave back in May.&lt;/p&gt;
+
+&lt;p&gt;(Sydney RORO members can skip this one... this is the same talk I did in Australia.)&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Helper for generating Technorati tags</title>
+   <link href="http://the.railsi.st/2007/09/28/helper-for-generating-technorati-tags/"/>
+   <updated>2007-09-28T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/09/28/helper-for-generating-technorati-tags</id>
+   <content type="html">&lt;p&gt;Need to support &lt;a href=&quot;http://technorati.com/help/tags.html&quot;&gt;Technorati tags&lt;/a&gt; in your application?&lt;/p&gt;
+
+&lt;p&gt;Here's a helper that does all the work. Just give it a list of tags and the helper will spit out all the necessary html for Technorati to index your content. (When you deploy, don't forget to &lt;a href=&quot;http://technorati.com/ping/&quot;&gt;ping them&lt;/a&gt; so they index you.)&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;technorati_tags_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;tag_links&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;tag_links&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;lt;a href=&amp;quot;http://technorati.com/tag/&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; 
+                &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;+&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;quot; rel=&amp;quot;tag&amp;quot;&amp;gt;&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; 
+                &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;lt;/a&amp;gt;&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;tag_links&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h2&gt;Assumptions&lt;/h2&gt;
+
+
+&lt;p&gt;Your tags are comma delimited and stored in a model attribute called &lt;code&gt;tags&lt;/code&gt;. (This helper should be placed on each individual blog post... typically the &lt;code&gt;&quot;show&quot;&lt;/code&gt; action.)&lt;/p&gt;
+
+&lt;h2&gt;Extra credit&lt;/h2&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;If you have a tag cloud, replace &lt;code&gt;http://technorati.com/tag/&lt;/code&gt; with the path to your local tag pages.&lt;/li&gt;
+&lt;li&gt;Don't need to show the tags? Wrap them in a div that's styled with &lt;code&gt;display: none;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Think about automatically adding a default set of tags to each post. If, for instance your blog was 100% about Rails, add tags for &quot;rails&quot; and &quot;ruby on rails&quot;. You can add these in the helper without cluttering up your database or admin interface with redundant information.&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Javascripter: Organize your javascript</title>
+   <link href="http://the.railsi.st/2007/08/22/javascripter-organize-your-javascript/"/>
+   <updated>2007-08-22T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/08/22/javascripter-organize-your-javascript</id>
+   <content type="html">&lt;p&gt;Just like &lt;a href=&quot;/2007/05/03/styler-stylesheets-made-easy&quot;&gt;Styler&lt;/a&gt;, you can use Javascripter to keep javascript organized in your application.&lt;/p&gt;
+
+&lt;h2&gt;Usage&lt;/h2&gt;
+
+
+&lt;p&gt;To use Javascripter, replace your &lt;code&gt;javascript_include_tags&lt;/code&gt; with a single tag:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;title&amp;gt;the.rails.ist&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;javascripts&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Once you do, your javascripts will be included automatically, using the conventions below.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;the.rails.ist&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/javascripts/application.js?1183566571&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h2&gt;Organize your javascripts&lt;/h2&gt;
+
+
+&lt;p&gt;Javascripter uses a simple set of conventions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Javascript for your entire application should be stored in application.js&lt;/li&gt;
+&lt;li&gt;Javascript for specific controllers should be stored in controller.js&lt;/li&gt;
+&lt;li&gt;Javascript for specific actions should be stored in controller_action.js&lt;/li&gt;
+&lt;li&gt;Javascript for specific actions should be stored in controller/action.js (optional)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Follow these conventions and Javascripter will reward you with automagic goodness, loading javascripts for specific controllers or actions whenever they are active.&lt;/p&gt;
+
+&lt;h2&gt;Support for :defaults&lt;/h2&gt;
+
+
+&lt;p&gt;Need Prototype? Just use the :defaults parameter, like normal.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;title&amp;gt;the.rails.ist&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;javascripts&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:defaults&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;And you'll get this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;the.rails.ist&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/javascripts/prototype.js?1187404678&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/javascripts/effects.js?1187404678&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/javascripts/dragdrop.js?1187404678&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/javascripts/controls.js?1187404678&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/javascripts/application.js?1187404678&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h2&gt;Include additional javascripts&lt;/h2&gt;
+
+
+&lt;p&gt;Need to include extra javascript libraries? Use the :include parameter:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;javascripts&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:include&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;lowpro&amp;quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;javascripts&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:include&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;lowpro&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;lightbox&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h2&gt;Generator&lt;/h2&gt;
+
+
+&lt;p&gt;Javascripter also includes a generator that will create a default application.js
+script and separate javascript files for each controller in your application.&lt;/p&gt;
+
+&lt;p&gt;To use the generator, run this command in your terminal:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;script/generate javascripts
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;If you add a new controller, just run the generator again and a new javascript
+for the controller will be created. (Existing javascripts will be ignored.)&lt;/p&gt;
+
+&lt;h2&gt;Credits&lt;/h2&gt;
+
+
+&lt;p&gt;Special thanks to &lt;a href=&quot;http://blog.smartbomb.com.au&quot;&gt;Lachie Cox&lt;/a&gt; and the rest of my &lt;a href=&quot;http://rubyonrails.com.au/sydney-meetups&quot;&gt;RORO Sydney&lt;/a&gt; comrades who asked for this plugin.&lt;/p&gt;
+
+&lt;h2&gt;Install&lt;/h2&gt;
+
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;script/plugin install git://github.com/mokolabs/javascripter.git
+&lt;/pre&gt;
+&lt;/div&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>How to customize attachment_fu file names</title>
+   <link href="http://the.railsi.st/2007/08/21/how-to-customize-attachment_fu-file-names/"/>
+   <updated>2007-08-21T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/08/21/how-to-customize-attachment_fu-file-names</id>
+   <content type="html">&lt;p&gt;For uploading files, it's pretty hard to beat &lt;a href=&quot;http://svn.techno-weenie.net/projects/plugins/attachment_fu/&quot;&gt;attachment_fu&lt;/a&gt;. But it can be overkill for smaller projects.&lt;/p&gt;
+
+&lt;p&gt;One issue is that attachment_fu uses id partioning. This is a great way to overcome native file system limitations when you have more than 32,000 attachments. By segmenting files into different directories, you can have millions of attachments, if necessary. Empahsis on &quot;if necessary&quot;. It usually isn't.&lt;/p&gt;
+
+&lt;p&gt;Also, attachment_fu preserves original filenames. While this make sense for many projects, sometimes you need to have control over the naming of attachments.&lt;/p&gt;
+
+&lt;p&gt;Since a lot of people use Mike Clark's excellent &lt;a href=&quot;http://clarkware.com/cgi/blosxom/2007/02/24&quot;&gt;File Upload Fu tutorial&lt;/a&gt;, let's use that as our starting point for customizing file names.&lt;/p&gt;
+
+&lt;p&gt;If we complete the tutorial, here's how attachment_fu will store our first image upload:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;public/mugshots/0000/0001/chunkybacon.png
+public/mugshots/0000/0001/chunkybacon_thumb.png
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Hmmm, not bad. But I'd like to customize things:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Images should be stored in &lt;code&gt;public/images/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Thumbnails should be organized by size&lt;/li&gt;
+&lt;li&gt;ID partioning (&lt;code&gt;0000/0001/&lt;/code&gt;) should be disabled&lt;/li&gt;
+&lt;li&gt;Images should be renamed with the Mugshot id&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;So let's open up our Mugshot model and tweak it a bit.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mugshot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;has_attachment&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:content_type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:storage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:file_system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:max_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kilobytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:resize_to&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;320x200&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:thumbnails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:thumb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;100x100&amp;gt;&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+                 &lt;span class=&quot;ss&quot;&gt;:path_prefix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;public/images/mugshots&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;validates_as_attachment&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;full_filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;file_system_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thumbnail_class&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attachment_options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:path_prefix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;thumb&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RAILS_ROOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_system_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;thumb&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thumbnail_name_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parent_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RAILS_ROOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_system_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;fullsize&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thumbnail_name_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;thumbnail_name_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;extension&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/\.\w+$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;asset&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;extension&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Now, when we upload an image, it will be stored like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;public/images/mugshots/fullsize/2.png
+public/images/mugshots/thumb/2.png
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;How does this work?&lt;/p&gt;
+
+&lt;p&gt;Well, first, we customize the &lt;code&gt;:path_prefix&lt;/code&gt; value in &lt;code&gt; has_attachment&lt;/code&gt; to set the base location of our files.&lt;/p&gt;
+
+&lt;p&gt;Second, we override the &lt;code&gt;full_filename&lt;/code&gt; method to force attachment_fu to save each thumbnail type into its own directory. This way, all large thumbnails are stored in &lt;code&gt;images/mugshots/fullsize&lt;/code&gt; and all small thumbnails are stored in &lt;code&gt;images/mugshots/thumb&lt;/code&gt;. (By default, attachment_fu stores all thumbnail sizes for an object in a single directory.)&lt;/p&gt;
+
+&lt;p&gt;Lastly, we override the &lt;code&gt;thumbnail_name_for&lt;/code&gt; method to customize the filename to our liking... in this case, the file name will consist of the parent mugshot id, plus the original file's file extension.&lt;/p&gt;
+
+&lt;p&gt;That's all we need to do... now our files are stored exactly where we want them!&lt;/p&gt;
+
+&lt;p&gt;(Thanks to AirBlade Software for &lt;a href=&quot;http://blog.airbladesoftware.com/2007/6/20/how-to-store-thumbnails-and-full-size-images-in-different-directories-with-attachment_fu&quot;&gt;showing the way&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;h2&gt;Extra credit&lt;/h2&gt;
+
+
+&lt;p&gt;If your attachments belong to another model (like a user), you'll need to use a before filter to associate the parent model id with the thumbnail you wish to store.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;n&quot;&gt;before_thumbnail_saved&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_id&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;You'll also need an extra migration to store the parent id. (Don't use the parent_id field... that's reserved by attachment_fu.)&lt;/p&gt;
+
+&lt;h2&gt;Extra, extra credit&lt;/h2&gt;
+
+
+&lt;p&gt;What if you want three sizes? Large (original image), medium, and small?&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;n&quot;&gt;has_attachment&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:content_type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+               &lt;span class=&quot;ss&quot;&gt;:storage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:file_system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+               &lt;span class=&quot;ss&quot;&gt;:max_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kilobytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+               &lt;span class=&quot;ss&quot;&gt;:thumbnails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:small&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;100x100&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:medium&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;200x200&amp;gt;&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+               &lt;span class=&quot;ss&quot;&gt;:path_prefix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;public/images/mugshots&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;validates_as_attachment&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;full_filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;file_system_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thumbnail_class&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attachment_options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:path_prefix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;small&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RAILS_ROOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_system_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;small&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thumbnail_name_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parent_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;medium&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RAILS_ROOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_system_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;medium&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thumbnail_name_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parent_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RAILS_ROOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_system_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;large&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thumbnail_name_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Problems installing restful_auth?</title>
+   <link href="http://the.railsi.st/2007/08/20/problems-installing-restful-auth/"/>
+   <updated>2007-08-20T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/08/20/problems-installing-restful-auth</id>
+   <content type="html">&lt;p&gt;When installing &lt;code&gt;restful_authentication&lt;/code&gt;, you run this command:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;patrick&lt;span class=&quot;nv&quot;&gt;$:&lt;/span&gt; script/generate authenticated user sessions --include-activation
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;And get this error.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;invalid option: --include-activation
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;What's wrong with this picture? Remove &lt;code&gt;acts_as_authenticated&lt;/code&gt;. You can't use both plugins at the same time.&lt;/p&gt;
+
+&lt;p&gt;Dumb, but I'm sure I won't be the only one.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Headliner and Styler talk</title>
+   <link href="http://the.railsi.st/2007/08/16/headliner-and-styler-talk/"/>
+   <updated>2007-08-16T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/08/16/headliner-and-styler-talk</id>
+   <content type="html">&lt;p&gt;As you might know, I've been over in Australia this summer... so I've been hanging with the &lt;a href=&quot;http://rubyonrails.com.au&quot;&gt;Sydney Rails group&lt;/a&gt;. (More about that later.)&lt;/p&gt;
+
+&lt;p&gt;At their July meeting, I gave a talk on Headliner and Styler:&lt;/p&gt;
+
+&lt;p&gt;&lt;object classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; width=&quot;437&quot; height=&quot;370&quot; id=&quot;viddler&quot;&gt;&lt;param name=&quot;movie&quot; value=&quot;http://www.viddler.com/player/60686700/&quot; /&gt;&lt;param name=&quot;allowScriptAccess&quot; value=&quot;always&quot; /&gt;&lt;param name=&quot;allowFullScreen&quot; value=&quot;true&quot; /&gt;&lt;embed src=&quot;http://www.viddler.com/player/60686700/&quot; width=&quot;437&quot; height=&quot;370&quot; type=&quot;application/x-shockwave-flash&quot; allowScriptAccess=&quot;always&quot; allowFullScreen=&quot;true&quot; name=&quot;viddler&quot; &gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Headliner bug fix</title>
+   <link href="http://the.railsi.st/2007/07/16/headliner-bug-fix/"/>
+   <updated>2007-07-16T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/07/16/headliner-bug-fix</id>
+   <content type="html">&lt;p&gt;Thanks to Jason Perry and Richard Crowley for catching a bug in the last Headliner update.&lt;/p&gt;
+
+&lt;p&gt;I'm hoping to put together tests for Headliner (and Styler) soon, so releases can be more reliable in the future, especially for people who are using svn externals.&lt;/p&gt;
+
+&lt;p&gt;Anyways, the bug is fixed, so I highly recommend updating now.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Styler adds support for nested stylesheets</title>
+   <link href="http://the.railsi.st/2007/07/15/styler-adds-support-for-nested-stylesheets/"/>
+   <updated>2007-07-15T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/07/15/styler-adds-support-for-nested-stylesheets</id>
+   <content type="html">&lt;p&gt;What happens when you have a really big application? You wind up with a ton of stylesheets in &lt;code&gt;public/stylesheets&lt;/code&gt;. It can get messy.&lt;/p&gt;
+
+&lt;p&gt;That's why Styler now supports &lt;em&gt;nested&lt;/em&gt; stylesheet directories.&lt;/p&gt;
+
+&lt;p&gt;To use this feature, just create subdirectories in &lt;code&gt;public/stylesheets&lt;/code&gt; for each of your controllers, and then add stylesheets for individual actions you wish to style.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Styles for an entire controller should be stored in &lt;code&gt;controller.css&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Styles for specific actions should be stored in &lt;code&gt;controller/action.css&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Also... there's no configuration required, and you can use flat and nested sheets interchangeably.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Don't use finders with validation helpers</title>
+   <link href="http://the.railsi.st/2007/05/25/dont-use-finders-with-validation-helpers/"/>
+   <updated>2007-05-25T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/05/25/dont-use-finders-with-validation-helpers</id>
+   <content type="html">&lt;p&gt;Rather innocently, I tried using this validation on my Category model.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;n&quot;&gt;validates_exclusion_of&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                       &lt;span class=&quot;ss&quot;&gt;:within&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Widget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; 
+                       &lt;span class=&quot;ss&quot;&gt;:message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;used by a widget&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;The idea behind this validation was to make sure a Category doesn't have the same name as a Widget.&lt;/p&gt;
+
+&lt;p&gt;But since validations are class methods, they get loaded whenever you access a model. So that means we get an extra SQL query &lt;u&gt;every time&lt;/u&gt; we do anything with our Category class, not just on create or update.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;User Load &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.001142&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;   SELECT * FROM widgets LIMIT 1
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;This might not seem like a big deal, but it's always good practice to keep database calls to a minimum.&lt;/p&gt;
+
+&lt;p&gt;So what's the workaround? Use a protected &lt;code&gt;#validate&lt;/code&gt; method instead.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;validate&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;errors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;used by a widget&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Widget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_by_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;You get the same validation, but without all the extra SQL love.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>RailsConf 2007</title>
+   <link href="http://the.railsi.st/2007/05/23/railsconf-2007/"/>
+   <updated>2007-05-23T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/05/23/railsconf-2007</id>
+   <content type="html">&lt;p&gt;Well, once again, RailsConf did not disappoint.&lt;/p&gt;
+
+&lt;p&gt;Portland kicked ass. Three times more attendees. Actual exhibitors. Great keynotes from Chad Fowler and Dave Thomas. Chris Wanstrath's talk on memecached. Watching a pack of swinging seniors overtake the SD Ruby meetup. Exploring downtown Portland. Printing business cards at Kinkos. Late night meals at Denny's. Happy hour with the Joyent folk. Meeting Ze Frank in person. And hacking out at RejectConf.&lt;/p&gt;
+
+&lt;p&gt;But the best part was just meeting all you Ruby folk.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Helper for making FAQ top links</title>
+   <link href="http://the.railsi.st/2007/05/11/helper-for-making-faq-top-links/"/>
+   <updated>2007-05-11T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/05/11/helper-for-making-faq-top-links</id>
+   <content type="html">&lt;p&gt;Here's a simple helper for adding top-style links to a long frequently asked questions document.&lt;/p&gt;
+
+&lt;p&gt;Add the code below to your helpers/application_helpers.rb file.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;top&lt;/span&gt;
+  &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;lt;a href=&amp;quot;#&amp;quot; class=&amp;quot;top&amp;quot; onclick=&amp;quot;window.scrollTo(0,0);return false;&amp;quot;&amp;gt;top&amp;lt;/a&amp;gt;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Then add &lt;code&gt;&amp;lt;%= top %&amp;gt;&lt;/code&gt; to each FAQ answer:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&amp;lt;a&amp;gt;&lt;/span&gt;Does Rails scale?&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%= top %&amp;gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;For extra credit, style and tweak the markup to your liking.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Roll your own in-place editor</title>
+   <link href="http://the.railsi.st/2007/05/09/roll-your-own-in-place-editor/"/>
+   <updated>2007-05-09T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/05/09/roll-your-own-in-place-editor</id>
+   <content type="html">&lt;p&gt;Recently, I needed a quick way to edit a model name in place.&lt;/p&gt;
+
+&lt;p&gt;I ran across &lt;code&gt;#in_place_editor&lt;/code&gt; in the Rails API and it worked perfectly... almost no work on my end, and sweet just-like-Flickr renaming goodness.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%= in_place_editor :name, :url =&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:action&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;rename_channel&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:save_text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Save&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:with&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Form.serialize(form) + &amp;#39;&amp;amp;channel=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@channel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;My happiness was short-lived, as I realized I needed to tweak some things (highlight color, submit button placement, etc.) And, strangely, Rails seem to ignore some of the options I was passing in.&lt;/p&gt;
+
+&lt;p&gt;But, hey, it's just a helper, right? So, when all else fails, let's write some code ourselves. Here's the standard output from this helper (and some ERB to insert the channel ID):&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;//&amp;lt;![CDATA[&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ajax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;InPlaceEditor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/widgets/rename_channel&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;serialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;amp;channel=&amp;lt;%= @channel.id %&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;okText&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Save&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;//]]&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;So, using &lt;a href=&quot;http://wiki.script.aculo.us/scriptaculous/show/Ajax.InPlaceEditor&quot;&gt;this script.aculo.us documentation&lt;/a&gt;, let's throw in some custom options that Rails doesn't support.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;//&amp;lt;![CDATA[&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ajax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;InPlaceEditor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/widgets/rename_channel&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;serialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;amp;channel=&amp;lt;%= @channel.id %&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;okText&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Save&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;formClassName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;edit_name&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;clickToEditText&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Click to rename channel&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;highlightcolor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#cdd8ea&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;//]]&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Perfect! Now our editor has a custom highlight color, better hover text, and a new form class name.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Styler: Stylesheets made easy</title>
+   <link href="http://the.railsi.st/2007/05/03/styler-stylesheets-made-easy/"/>
+   <updated>2007-05-03T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/05/03/styler-stylesheets-made-easy</id>
+   <content type="html">&lt;p&gt;Styler is designed to DRY up the process of including and generating stylesheets, so you can think less about stylesheet configuration and more about styling.&lt;/p&gt;
+
+&lt;h2&gt;Usage&lt;/h2&gt;
+
+
+&lt;p&gt;To use Styler, just update your layout(s) with this code:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;title&amp;gt;the.rails.ist&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stylesheets&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Styler will then include your stylesheets automatically:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;the.rails.ist&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/stylesheets/application.css?1170968897&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!--[if IE 7]&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;link href=&amp;quot;/stylesheets/ie7.css?1170968897&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;![endif]--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!--[if IE 6]&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;link href=&amp;quot;/stylesheets/ie6.css?1170968897&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;![endif]--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Styler will also dynamically include stylesheets for each of your controllers (if such stylesheets are present), so you can keep your styles organized into logical sections.&lt;/p&gt;
+
+&lt;h2&gt;Organize your stylesheets&lt;/h2&gt;
+
+
+&lt;p&gt;Styler uses a simple set of conventions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Styles for your entire application should be stored in &lt;code&gt;application.css&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Styles for specific controllers should be stored in &lt;code&gt;controller.css&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Styles for specific actions should be stored in &lt;code&gt;controller_action.css&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Styles for Internet Explorer 7 should be stored in &lt;code&gt;ie7.css&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Styles for Internet Explorer 6 should be stored in &lt;code&gt;ie6.css&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;When used in combination, these conventions can scale up to support pretty big applications.&lt;/p&gt;
+
+&lt;h2&gt;Include additional stylesheets&lt;/h2&gt;
+
+
+&lt;p&gt;Conventions are great, but need to add your own stylesheets?&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stylesheets&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:include&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;reset&amp;quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stylesheets&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:include&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;reset&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;fonts&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h2&gt;Use nested stylesheets (optional)&lt;/h2&gt;
+
+
+&lt;p&gt;For bigger projects, you might wish to break your stylesheets into separate directories.&lt;/p&gt;
+
+&lt;p&gt;To use nested stylesheets, just create subdirectories in &lt;code&gt;public/stylesheets&lt;/code&gt; for each of your controllers, and then add stylesheets for individual actions you wish to style.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Styles for an entire controller should be stored in &lt;code&gt;controller.css&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Styles for specific actions should be stored in &lt;code&gt;controller/action.css&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;Generator&lt;/h2&gt;
+
+
+&lt;p&gt;Styler also includes a generator that will create a default set of stylesheets (&lt;code&gt;application.css&lt;/code&gt;, &lt;code&gt;ie7.css&lt;/code&gt;, and &lt;code&gt;ie6.css&lt;/code&gt;) and a separate stylesheet for each controller in your application.&lt;/p&gt;
+
+&lt;p&gt;To use the generator, run this command in your terminal:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;script/generate stylesheets
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;If you add a new controller, just run the generator again and a new stylesheet for the controller will be created. (Styler will safely ignore any existing stylesheets.)&lt;/p&gt;
+
+&lt;h2&gt;Install&lt;/h2&gt;
+
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;script/plugin install git://github.com/mokolabs/styler.git
+&lt;/pre&gt;
+&lt;/div&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Headliner: DRY up your page titles</title>
+   <link href="http://the.railsi.st/2007/05/03/headliner-dry-up-your-page-titles/"/>
+   <updated>2007-05-03T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/05/03/headliner-dry-up-your-page-titles</id>
+   <content type="html">&lt;p&gt;Normally, if your Rails application has lots of actions and a shared layout, you might find yourself setting custom page title names in your controllers.&lt;/p&gt;
+
+&lt;p&gt;Here's an example:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;PagesController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;about&lt;/span&gt;
+    &lt;span class=&quot;vi&quot;&gt;@title&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;About us&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Then, in your main layout, you might have something like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;title&amp;gt;My website&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;vi&quot;&gt;@title&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;vi&quot;&gt;@title&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;/head&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;This works okay... but page titles don't really belong in controllers, do they?&lt;/p&gt;
+
+&lt;p&gt;So, by moving these titles into your views, we can DRY things up a bit and reinforce the MVC design pattern that's so fundamental to Ruby on Rails.&lt;/p&gt;
+
+&lt;h2&gt;Usage&lt;/h2&gt;
+
+
+&lt;p&gt;First, add this code to your main layout:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:site&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;My website&amp;quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Then, to set the page title, add this to each of your views:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;My page title&amp;quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;When views are rendered, the page title will be included in the right spots:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;My website | My page title&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;My page title&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h2&gt;Options&lt;/h2&gt;
+
+
+&lt;p&gt;Use these options to customize the title format:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;:prefix (text between site name and separator)&lt;/li&gt;
+&lt;li&gt;:separator (text used to separate website name from page title)&lt;/li&gt;
+&lt;li&gt;:suffix (text between separator and page title)&lt;/li&gt;
+&lt;li&gt;:lowercase (when true, the page name will be lowercase)&lt;/li&gt;
+&lt;li&gt;:reverse (when true, the page and site names will be reversed)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;And here are a few examples to give you ideas.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:separator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;amp;mdash;&amp;quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:prefix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:separator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;:&amp;quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:lowercase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:reverse&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:prefix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h2&gt;Dealing with special pages&lt;/h2&gt;
+
+
+&lt;p&gt;How do you set the page title without showing it in the view?&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;My page title&amp;quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;What if your view headline is different from your page title?&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;My page title&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;My headline&amp;quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h2&gt;Mr. T says, &amp;#8216;Use my method, fool!&amp;#8217;&lt;/h2&gt;
+
+
+&lt;p&gt;Just like ERB's &lt;a href=&quot;http://www.ruby-doc.org/stdlib/libdoc/erb/rdoc/&quot;&gt;HTML safe method&lt;/a&gt;, you can invoke Headliner with a single letter alias.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;My page title&amp;quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h2&gt;How does it work?&lt;/h2&gt;
+
+
+&lt;p&gt;Ruby on Rails renders actions &lt;em&gt;before&lt;/em&gt; inserting them into layouts. So, if you set a variable in your view, it will be accessible in your layout. But, at first glance, it looks like you're using a variable (in the head) before it's been assigned a value (in the body). Cool, huh?&lt;/p&gt;
+
+&lt;h2&gt;Credits&lt;/h2&gt;
+
+
+&lt;p&gt;Special thanks to Nick Zadrozny and Jordan Fowler for their input.&lt;/p&gt;
+
+&lt;h2&gt;Install&lt;/h2&gt;
+
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;script/plugin install git://github.com/mokolabs/headliner.git
+&lt;/pre&gt;
+&lt;/div&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Don't use flash for a controller method name</title>
+   <link href="http://the.railsi.st/2007/05/02/don-t-use-flash-for-a-controller-method-name/"/>
+   <updated>2007-05-02T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/05/02/don-t-use-flash-for-a-controller-method-name</id>
+   <content type="html">&lt;p&gt;While working on a &lt;a href=&quot;http://chumby.com/developers/flash&quot;&gt;Flash developers page&lt;/a&gt; for the Chumby website, I kept getting this error:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;Error in DevelopersController#flash
+
+You have a nil object when you didn&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;t expect it!
+The error occured &lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;evaluating nil.sweep
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Pretty puzzling at first. The method was empty, so what could be wrong here?&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DevelopersController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;flash&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Eventually... it hit me! ActionController has its own &lt;a href=&quot;http://api.rubyonrails.org/classes/ActionController/Flash.html&quot;&gt;flash method&lt;/a&gt; which is used to display flash notices and warnings.&lt;/p&gt;
+
+&lt;p&gt;But, in this case, I was making a page about Adobe Flash, so I was running over a reserved word for controller method names. Kinda obvious, once you think about it.&lt;/p&gt;
+
+
+&lt;p&gt;What's the workaround? Well... if you really need your page to be named &quot;flash&quot; (and I did), just remove the method from your controller. As long as you have a template named flash.rhtml, the page will still load.&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>How to DRY up your stylesheet includes</title>
+   <link href="http://the.railsi.st/2007/04/29/how-to-dry-up-your-stylesheet-includes/"/>
+   <updated>2007-04-29T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/04/29/how-to-dry-up-your-stylesheet-includes</id>
+   <content type="html">&lt;p&gt;Here's a helper to automatically include stylesheets in your layouts.&lt;/p&gt;
+
+&lt;p&gt;This helper will include any stylesheets in public/stylesheets/ that match these conventions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Styles for your entire application should be stored in application.css&lt;/li&gt;
+&lt;li&gt;Styles for specific controllers should be stored in controller_name.css&lt;/li&gt;
+&lt;li&gt;Styles for Internet Explorer 7 should be stored in ie7.css&lt;/li&gt;
+&lt;li&gt;Styles for Internet Explorer 6 should be stored in ie6.css&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;The IE6 and 7 stylesheets will be wrapped in conditional comments, so they'll only load when requested by matching browsers.&lt;/p&gt;
+
+&lt;p&gt;To install, just add this method to your helpers/application_helpers.rb&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;stylesheets&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;stylesheets&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;application&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;controller_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ie7&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ie6&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;stylesheets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collect!&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exist?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RAILS_ROOT&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/public/stylesheets/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.css&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ie7&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;!--[if IE 7]&amp;gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stylesheet_link_tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;lt;![endif]--&amp;gt;&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ie6&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;!--[if IE 6]&amp;gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stylesheet_link_tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;lt;![endif]--&amp;gt;&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;stylesheet_link_tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;stylesheets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compact&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Then add &lt;code&gt;&amp;lt;%= stylesheets %&amp;gt;&lt;/code&gt; to your layout(s):&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;title&amp;gt;the.rails.ist&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stylesheets&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;When the template is rendered, you'll get this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;the.rails.ist&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/stylesheets/application.css?1170968897&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!--[if IE 7]&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;link href=&amp;quot;/stylesheets/ie7.css?1170968897&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;![endif]--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!--[if IE 6]&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;link href=&amp;quot;/stylesheets/ie6.css?1170968897&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;![endif]--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Note: to keep the example code clean, I removed the media, rel, and type attributes that Rails normally includes with stylesheet links. But, when you run the helper for real, they'll be included.&lt;/p&gt;
+
+&lt;p&gt;The cool part is that controller-specific stylesheets will only be included when the relevant controller is invoked. Looking at a page in your &quot;products&quot; controller? Then products.css will be included, but only on pages loaded by that controller.&lt;/p&gt;
+
+&lt;p&gt;Want to go further?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Need to support Internet Explorer 5.5 or earlier? Create a new stylesheet named ie55 (which will contain any IE5.5-specific styles), and then add &lt;code&gt;&quot;ie55&quot;&lt;/code&gt; to the list of stylesheets at the start of the helper&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;&quot;#{controller.controller_name}_#{controller.action_name}&quot;&lt;/code&gt; to the list of stylesheets. This will allow you to include stylesheets that are specific to a single action.&lt;/li&gt;
+&lt;li&gt;Need to include a stylesheet for Lightbox or Redbox? Same deal... just update the stylesheet list (and make your any new stylesheets are copied into your &lt;code&gt;public/stylesheets/&lt;/code&gt; directory).&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Stay tuned... I'll be releasing a plugin based on this helper soon. UPDATE: the plugin &lt;a href=&quot;/2007/05/03/styler-stylesheets-made-easy&quot;&gt;has been released&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;(This code is loosely based on &lt;a href=&quot;http://www.bigbold.com/snippets/posts/show/509&quot;&gt;this snippet&lt;/a&gt;.)&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Welcome</title>
+   <link href="http://the.railsi.st/2007/04/28/welcome-to-the-railsi-st/"/>
+   <updated>2007-04-28T00:00:00-07:00</updated>
+   <id>http://the.railsi.st.com/2007/04/28/welcome-to-the-railsi-st</id>
+   <content type="html">&lt;p&gt;I'm finally getting around to blogging about Rails.&lt;/p&gt;
+
+&lt;h2&gt;Why Ruby on Rails?&lt;/h2&gt;
+
+&lt;p&gt;I spent six years building web applications with PHP. And that worked pretty well. Back in 2000, PHP was considered light and agile.&lt;/p&gt;
+
+&lt;p&gt;But, as the industry grew, and web apps became more and more sophisticated, PHP couldn't keep up. Yeah, I could easily write 20,000 lines of code (and I did)... but why?&lt;/p&gt;
+
+&lt;p&gt;I was burnt out. Too much code. Too much work. Too little fun.&lt;/p&gt;
+
+&lt;p&gt;Rails changed all that.&lt;/p&gt;
+
+&lt;h2&gt;Why the.railsi.st?&lt;/h2&gt;
+
+&lt;p&gt;In the Rails community, most people prefer to call themselves rubyists. And they're right... if you use Rails long enough, you realize Rails is special because Ruby is special. The elegant simplicity isn't something DHH created... it's Ruby.&lt;/p&gt;
+
+&lt;p&gt;But, to me, it's the other way around. I'm a railsist... because I'd never have gone down this road without Rails. I remember thinking, &quot;A programming language that's big in Japan? Who cares?&quot;&lt;/p&gt;
+
+&lt;p&gt;But I was wrong. And Rails showed me why.&lt;/p&gt;
+
+&lt;h2&gt;How did I start using Rails?&lt;/h2&gt;
+
+&lt;p&gt;While working for &lt;a href=&quot;http://eventful.com&quot;&gt;Eventful&lt;/a&gt;, I'd been exposed to the work of 37Signals.&lt;/p&gt;
+
+&lt;p&gt;So when RubyConf came to San Diego in 2005, I crashed the conference with my friend &lt;a href=&quot;http://edward.oconnor.cx/&quot;&gt;Ted&lt;/a&gt;. After seeing all the talks, I was sold. I bought a copy of Pickaxe and Agile, and started playing around. A few months later, I deployed &lt;a href=&quot;http://graffletopia.com&quot;&gt;my first production Rails app&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Since then, it's been a great ride.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ 
+</feed>
