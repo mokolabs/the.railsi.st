@@ -1,6 +1,7 @@
 --- 
 layout: post
 title: Roll your own attachment_fu validations
+comments: 2
 ---
 Lots of folks use attachment_fu to handle image uploads. It handles all the dirty work of uploading files, integrates with Amazon S3, and even supports all the different image libraries.
 

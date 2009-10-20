@@ -1,0 +1,132 @@
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://autopilotmarketing.com/">Dan Kubb</a></span>
+<span class="date">June 04, 2007</span>
+</div>
+<div class="body">
+<p>The only thing I'd probably do differently is have the styles for specific actions default to ontroller_name/action_name.css, which matches the naming convention for views a bit closer.</p>
+
+<p>Other than that these seem like pretty good defaults.  This, or something close, should probably be included in the rails core.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">July 15, 2007</span>
+</div>
+<div class="body">
+<p>Styler now supports nested stylesheets, Dan.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">agkr</span>
+<span class="date">August 22, 2007</span>
+</div>
+<div class="body">
+<p>I prefer having certain stylesheets like "reset.css" and "fonts.css" before "application.css".  The way styler is currently implemented this is not possible.  I patched my copy to support a :prepend option and preserve the current behavior of :include.  However, it may be desirable just to change the behavior of :include.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">August 22, 2007</span>
+</div>
+<div class="body">
+<p>You're right, agkr.</p>
+
+<p>Some people may prefer including files after application.css, but there are valid reasons for including them before.</p>
+
+<p>Since Styler (and now Javascripter) are out in the open, I think including a :prepend option is the safer way to go. That way, we won't break applications already using these plugins.</p>
+
+<p>Can you email me a copy of your patch?</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.jordanfowler.com">Jordan Fowler</a></span>
+<span class="date">August 24, 2007</span>
+</div>
+<div class="body">
+<p>Patrick, did you end up adding that :prepend option? I was just messing with styler and javascripter and was hoping to do this. Then I got to thinking, you might want to support the following (instead of just :include):</p>
+
+{% highlight ruby %}
+javascripter :defaults, :include_before => [...], :include_after => [...]
+{% endhighlight %}
+
+<p>These would place extra javascripts either before or after application.js. Just a thought!</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">August 25, 2007</span>
+</div>
+<div class="body">
+<p>Haven't added it yet, Jordan. But I'm leaning towards your syntax.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">Kristoph</span>
+<span class="date">September 29, 2007</span>
+</div>
+<div class="body">
+<p>It would be helpful to be able to add arbitrary stylesheets in the page or in a partial and have those sheets injected into the head.</p>
+
+<p>I have noted, in production, that a number of different pages include the same partials and so the designer is either forced to put the styles for the partials into application.css file (which gets to be very large on a large project) or use @include in the partial itself (yuck!).</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://fourthmedia.co.in">Hrishi</a></span>
+<span class="date">January 23, 2008</span>
+</div>
+<div class="body">
+<p>hi Pat,
+
+<p>Stylesheet worked great. I was wonding if i can dynamically supply a user ID and based on the User ID, the style sheet can be loaded from the stylesheet directory.</p>
+
+<p>Say for example, i have various users who have different 'skins' for their account. Based on the user who logs in, i will supply an argument to the layout and it would supply me the appropriate stylesheet associated with the account.</p>
+
+<p>Can you suggest a way of acheiving this?</p>
+
+<p>Thanks.
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">Felipe Barreto</span>
+<span class="date">April 15, 2008</span>
+</div>
+<div class="body">
+<p>Hi, Pat</p>
+  
+<p>I've just made a patch for your plugin where I add tests for everything and I also added one more feature: sheet for print media convention.</p>
+  
+<p>Now, if you create application_print.css, ieX_print.css, controller_print.css, etc. they'll be automatically added to the page with the :media => 'print' option enabled.</p>
+
+<p>I'm sending it to your e-mail right now. I hope you enjoy it.</p>
+
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">jude</span>
+<span class="date">September 13, 2008</span>
+</div>
+<div class="body">
+<p>nice</p>
+</div>
+

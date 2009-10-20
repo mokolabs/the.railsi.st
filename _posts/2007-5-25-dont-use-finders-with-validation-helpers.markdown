@@ -1,6 +1,7 @@
 --- 
 layout: post
 title: "Don't use finders with validation helpers"
+comments: 9
 ---
 Rather innocently, I tried using this validation on my Category model.
 
@@ -29,3 +30,4 @@ end
 {% endhighlight %}
 
 You get the same validation, but without all the extra SQL love.
+

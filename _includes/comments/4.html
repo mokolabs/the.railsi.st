@@ -1,0 +1,35 @@
+
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://theamazingrando.com/blog">Paul</a></span>
+<span class="date">September 28, 2007</span>
+</div>
+<div class="body">
+<p>Or:</p>
+
+{% highlight ruby %}
+def links_from_tags(taglist)
+
+  taglist.map do |tag|
+    link_to(tag, "http://technorati.com/tag/#{tag.gsub(' ', '+')}", :rel => 'tag')
+  end.join("\n")
+end
+{% endhighlight %}
+
+<p>call like:</p>
+
+{% highlight erb %}
+<%= links_from_tags(model.tags) %>
+{% endhighlight %}
+
+</div>
+
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">September 28, 2007</span>
+</div>
+<div class="body">
+<p>Much nicer, Paul.</p>
+<p>Your code probably works a lot better for people for using the various tag plugins. In my case, I'm solely adding tags for the purpose of supporting Technorati on a simple blog, so that's why I'm fetching tags directly from the model.</p>
+</div>

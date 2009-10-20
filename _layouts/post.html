@@ -9,3 +9,36 @@ layout: default
 
 <div class="date">{{ page.date | date: "%B %d, %Y" }}</div>
 </div>
+
+{% if page.comments %}
+<h2 id="comments">Comments</h2>
+
+{% case page.comments %} 
+{% when 1 %}
+{% include comments/1.html %}
+{% when 2' %}
+{% include comments/2.html %}
+{% when 3 %}
+{% include comments/3.html %}
+{% when 4 %}
+{% include comments/4.html %}
+{% when 5 %}
+{% include comments/5.html %}
+{% when 6 %}
+{% include comments/6.html %}
+{% when 7 %}
+{% include comments/7.html %}
+{% when 8 %}
+{% include comments/8.html %}
+{% when 9 %}
+{% include comments/9.html %}
+{% when 10 %}
+{% include comments/10.html %}
+{% when 11 %}
+{% include comments/11.html %}
+{% when 12 %}
+{% include comments/12.html %}
+{% endcase %}
+{% endif %}
+
+<p class="note">New comments are disabled right now. Once we finish migrating this blog, we'll restore them.</p>

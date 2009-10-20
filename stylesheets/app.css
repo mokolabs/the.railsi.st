@@ -288,3 +288,26 @@ pre {
   font-size: 16px;
   margin: 16px 0;
 }
+
+#comments {
+  margin-top: 64px;
+}
+
+.comment {
+  margin: 24px 0;
+}
+
+.comment .author {
+  font-weight: bold;
+}
+
+.comment .date {
+  color: #666;
+  font-family: Georgia, Times, serif;
+}
+
+.note {
+  color: #999;
+  font-size: 12px;
+  margin: 18px 0;
+}

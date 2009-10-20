@@ -1,0 +1,342 @@
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.leonardofaria.net">Leonardo Faria Coelho</a></span>
+<span class="date">August 21, 2007</span>
+</div>
+<div class="body">
+<p>It's works with acts_as_attachment?</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">August 21, 2007</span>
+</div>
+<div class="body">
+<p>Not to my knowledge, Leonardo.</p>
+
+<p>attachment_fu is a significant rewrite of acts_as_attachment, so a lot of the codebase has changed. You should consider upgrading your application, if possible.</p></div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.launchpadinteract.com">Paul</a></span>
+<span class="date">August 24, 2007</span>
+</div>
+<div class="body">
+<p>If you would like to resize images based on whatever, (here the params[:adtype].keys of the AdsController having a certain value) you can do this:</p>
+
+<p>1. Add a custom version of this to your model</p>
+
+{% highlight ruby %}
+#...
+include ObjectSpace
+# change :ad to whatever model your image belongs to.
+belongs_to :ad
+
+def self.find_size
+# Change AdsContoller to the controller of your model and params[adtype].keys to<br/>
+# whatever value you want to test for.<br/>
+if adtype = ObjectSpace.each_object(AdsController) {|a| p a.params[:adtype].keys <br/>unless a.params[:adtype] == nil}
+    @size = case adtype
+    # customize your sizes and conditions
+      when 1
+         '150x100'
+       when 2
+         '200x150'
+       when 3
+         '250x200'
+       else<br/>
+         '250x250'
+    end
+  end
+  return @size || false
+end
+
+#modify this as you normally would, but without the :resize_to parameter
+has_attachment :content_type => :image,
+                :storage => :file_system,
+                :max_size => 500.kilobytes,
+                :path_prefix => "public/images/"
+validates_as_attachment
+{% endhighlight %}
+
+<p>2. Add this to attachment-fu.rb (after  the definition for  "has_attachment"</p>
+
+{% highlight ruby %}
+# ...
+# this allows for dynamic resizing written in the model itself - PS
+   options[:resize_to] = self.find_size if self.respond_to?(find_size) and find_size != false
+# ...
+{% endhighlight %}
+ 
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">mla</span>
+<span class="date">September 22, 2007</span>
+</div>
+<div class="body">
+<p>This wasn't working for me. Calling public_filename(:thumb) was always returning the full version since full_filename() is no longer honoring the thumbnail parameter.</p>
+
+<p>This does seem to work for me, however.</p>
+
+{% highlight ruby %}
+def full_filename(thumbnail = nil)
+  file_system_path = (thumbnail ? thumbnail_class : self).attachment_options[:path_prefix]
+  thumbnail ||= self.thumbnail
+  subdir = thumbnail ? thumbnail.to_s : 'full'
+  File.join(RAILS_ROOT, file_system_path, subdir, thumbnail_name_for)
+end
+
+def thumbnail_name_for(thumbnail = nil)
+  extension = filename.scan(/\.\w+$/)
+  "#{attachment_path_id.to_s}#{extension}"
+end
+{% endhighlight %}
+
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://agil-e.com">Markus</a></span>
+<span class="date">October 25, 2007</span>
+</div>
+<div class="body">
+<p>Hi!</p>
+
+<p>I think that customizing filenames should be in attacment_fu by default, but it seems that the people at TechnoWeenie no longer develop this plugin (at least for the seven past months). I had made my approach to this topic in a different way than you.</p>
+
+<p>Basically, I hook the filename itself before the whole attachment being saved. This is made with a simple method and before callback. Works well when we are keepping the filename bound to its owner model's name or whatever.</p>
+
+<p>For creations:</p>
+
+{% highlight ruby %}
+def before_create
+self.filename = "some-name-taken-out-from-othe-model-or-filename-normalization" # The file isn't yet save so we change the filename itself without touching any other thing. The thumbnails will be saved using this filename as well.
+end
+{% endhighlight %}
+
+
+<p>The example above could be a before_add statement in a model association, which is the case I are actually using in muy application. Remember that in Rails versions prior to 2.0 the before_add statement only works if you do model.association << object</p>
+
+<p>For updates:</p>
+
+{% highlight ruby %}
+def filename!(new_filename)
+self.temp_path = full_filename # This tells attachment_fu where the old file is and that in the save method it has to rename it.
+serf.filename = new_filename # This simply override the actual filename to, when attachment_fu saves the record, rewrite all files, including thumbnails, using this filename.
+end
+{% endhighlight %}
+
+<p>And that's all. Enjoy it!</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">Steven G</span>
+<span class="date">November 29, 2007</span>
+</div>
+<div class="body">
+<p>Great article!</p>
+
+<p>I am struggling a bit with custom directories though. My assets are called "mugshots" and they belong_to :artist. I am trying to hook this up so that the shots get saved in a folder with the artists name.</p>
+
+<p>http://pastie.caboo.se/123257</p>
+
+<p>I can save the main image successfully in the artist folder, but oddly enough the thumbnails are still defaulting to numbered folders.</p>
+
+<p>Any ideas?</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.johnmurch.com">John Murch</a></span>
+<span class="date">December 05, 2007</span>
+</div>
+<div class="body">
+<p>Hey,</p>
+
+<p>Thanks for the post about the extra credit: like if your attachments belong to another model (like a user) and you need to store the photo_id but I had a question about this that I can not seem to find the answer to.</p>
+
+<p>Basically I am building a social network where you have to upload images and want to store the photo_id of the image into different models. For example, a Users Profile would be one, a Group would be another, and possible even a blog could have its own image. I was looking for a DRY method that would allow me to easily store these photo_id once they upload the photo and update the model with these photo_id.</p>
+
+<p>So you said you can use:</p>
+
+{% highlight ruby %}
+before_thumbnail_saved do |record, thumbnail|
+  thumbnail.user_id = record.user_id
+end
+{% endhighlight %}
+
+<p>But how does this work if you have 3 models you need to store the id of the photo you just uploaded? Or if anyone else has any ideas, they would be greatly appreciated.
+  
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://omarvelous.com">Omarvelou</a></span>
+<span class="date">February 10, 2008</span>
+</div>
+<div class="body">
+<p>John,</p>
+
+<p>Polymorphic Associations is what you'd need. Look into that.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">a</span>
+<span class="date">February 25, 2008</span>
+</div>
+<div class="body"><p>Hey, Thanks for the post about the extra credit: like if your attachments belong to another model (like a user) and you need to store the photo_id but I had a question about this that I can not seem to find the answer to. Basically I am building a social network where you have to upload images and want to store the photo_id of the image into different models. For example, a Users Profile would be one, a Group would be another, and possible even a blog could have its own image. I was looking for a DRY method that would allow me to easily store these photo_id once they upload the photo and update the model with these photo_id. So you said you can use before_thumbnail_saved do |record, thumbnail| thumbnail.user_id = record.user_id end But how does this work if you have 3 models you need to store the id of the photo you just uploaded? Or if anyone else has any ideas, they would be greatly appreciated.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://kill3rb.blogspot.com">buddhi</a></span>
+<span class="date">March 04, 2008</span>
+</div>
+<div class="body">
+<p>I wanted to save all files in a single directory yet change the names.. but gave me so many errors since thumbnail does not exist on creation time.. and we have to use self.thumbnail. did some mods to the code and hope this would be the best place to post the changes (i also got the inspiration to modify the code from here).. thanks for great tips.</p>
+
+<p>modified code will hopefully work for any thumbnail. doesnt have to specify "thumb1", "thumb2" trying to minimize the code size and keeping it generic as possible.</p>
+
+{% highlight ruby %}
+class Photo < ActiveRecord::Base
+	has_attachment	:content_type => :image, 
+              							:storage => :file_system, 
+              							:size => 1.kilobyte .. 10.megabytes,
+              							:resize_to => '500>',
+                            :thumbnails => { :thumb => '125' },
+              							:path_prefix => 'public/images/product_pics',
+                            :processor    => 'MiniMagick'
+  validates_as_attachment
+  belongs_to  :product
+
+  def full_filename(thumbnail = nil)
+    file_system_path = (thumbnail ? thumbnail_class : self).attachment_options[:path_prefix]
+    @thumb = self.thumbnail unless (@thumb = thumbnail) #checks if thumbnails info already exisit
+    File.join(RAILS_ROOT, file_system_path, self.product.code, thumbnail_name_view(@thumb, self.product.code))
+  end
+
+  def thumbnail_name_view(thumbnail = nil, asset = nil)
+    suffix = "_#{thumbnail}" unless thumbnail.blank?  #sets suffix by the name of the thumbnail set in has_attachment options
+    extension = filename.scan(/\.\w+$/) # extracts extension
+    return "#{asset}#{suffix}#{extension}"
+  end
+  
+  before_thumbnail_saved do |record, thumbnail|
+      thumbnail.product_id = record.product_id
+  end
+
+end
+{% endhighlight %}
+
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.nicolasblock.com">nicolas b</a></span>
+<span class="date">June 06, 2008</span>
+</div>
+<div class="body"><p>I'd been playing with this for a while. I needed unique filenames so that i could use paranoid delete and based on your example i chose this naming scheme: public/images/photos/small/parent_id.extension. One of my goals was to make image tags easy within the app. I wanted to be able to write something like image_tag("photos/large#{photo.id}#{photo.extension}").This works for me:</p>
+
+{% highlight ruby %}
+def full_filename(thumbnail = nil)
+  file_system_path = (thumbnail ? thumbnail_class : self).attachment_options[:path_prefix]
+  #stole this out of the attachment fu controller.. greek to me
+  ext = nil
+  basename = self.filename.gsub /\.\w+$/ do |s|
+    ext = s; ''
+  end
+  case self.thumbnail
+  when "medium"
+    File.join(RAILS_ROOT, file_system_path, 'medium', "#{self.parent_id.to_s}#{ext}")
+  when "small"
+    File.join(RAILS_ROOT, file_system_path, 'small', "#{self.parent_id.to_s}#{ext}")
+  else
+    File.join(RAILS_ROOT, file_system_path, 'large', "#{self.parent_id.to_s}#{ext}")
+  end
+end
+{% endhighlight %}
+
+<p>I hope this is helpful to anyone searching for a way to make unique filenames with attachment_fu</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.nicolasblock.com">nicolas b</a></span>
+<span class="date">June 06, 2008</span>
+</div>
+<div class="body"><p>overwrite thumbnail_name_for(thumbnail = nil) in attachment_fu.rb to change the name stored in the database.  plugins are loaded when the server starts, so don't make the mistake i did and spend an hour wondering why your changes aren't working: restart the server.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">dan</span>
+<span class="date">August 12, 2008</span>
+</div>
+<div class="body">
+<p>nicolas b if this works for you it should work for me right I've got a few errors here m8!</p>
+
+<p>Anyway if you could pasting the model file I would like so greatfull!</p></div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://mobitv.com">Ben Pellow</a></span>
+<span class="date">November 05, 2008</span>
+</div>
+<div class="body">
+<p>Despite correctly renaming the file itself and saving it in the correct location, the name of the file in the 'filename' field in the database doesn't get updated...it stays the same as the name of the file itself instead of getting renamed.</p>
+
+<p>Any idea how to get the filename field to update?</p>
+
+<p>For reference, here's my model:</p>
+
+{% highlight ruby %}
+class DevicePicture < ActiveRecord::Base
+  belongs_to :manufacturer_model  
+  
+  has_attachment :content_type => :image,
+  				 :storage	   => :file_system,
+  				 :max_size	   => 500.kilobytes,
+  				 :resize_to    => '384x256>',  				 
+  				 :thumbnails   => { :thumb => '98>' },
+  				 :path_prefix => 'public/device_pictures/'
+  				 
+  validates_as_attachment
+  
+  def full_filename(thumbnail = nil)
+    file_system_path = (thumbnail ? thumbnail_class : self).attachment_options[:path_prefix]
+    case self.thumbnail
+    when "thumb"
+      File.join(RAILS_ROOT, file_system_path, 'thumb', thumbnail_name_for(thumbnail, self.parent_id))
+    else
+      File.join(RAILS_ROOT, file_system_path, 'fullsize', thumbnail_name_for(thumbnail, self.id))
+    end
+  end      
+
+  def thumbnail_name_for(thumbnail = nil, asset = nil)
+    extension = filename.scan(/\.\w+$/)
+    return "#{asset}#{extension}"
+  end     
+end
+{% endhighlight %}
+
+</div>

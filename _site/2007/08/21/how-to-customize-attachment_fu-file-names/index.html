@@ -218,6 +218,375 @@ public/images/mugshots/thumb/2.png
 <div class="date">August 21, 2007</div>
 </div>
 
+
+<h2 id="comments">Comments</h2>
+
+
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.leonardofaria.net">Leonardo Faria Coelho</a></span>
+<span class="date">August 21, 2007</span>
+</div>
+<div class="body">
+<p>It's works with acts_as_attachment?</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">August 21, 2007</span>
+</div>
+<div class="body">
+<p>Not to my knowledge, Leonardo.</p>
+
+<p>attachment_fu is a significant rewrite of acts_as_attachment, so a lot of the codebase has changed. You should consider upgrading your application, if possible.</p></div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.launchpadinteract.com">Paul</a></span>
+<span class="date">August 24, 2007</span>
+</div>
+<div class="body">
+<p>If you would like to resize images based on whatever, (here the params[:adtype].keys of the AdsController having a certain value) you can do this:</p>
+
+<p>1. Add a custom version of this to your model</p>
+
+
+<div class="highlight"><pre><span class="c1">#...</span>
+<span class="kp">include</span> <span class="no">ObjectSpace</span>
+<span class="c1"># change :ad to whatever model your image belongs to.</span>
+<span class="n">belongs_to</span> <span class="ss">:ad</span>
+
+<span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">find_size</span>
+<span class="c1"># Change AdsContoller to the controller of your model and params[adtype].keys to&lt;br/&gt;</span>
+<span class="c1"># whatever value you want to test for.&lt;br/&gt;</span>
+<span class="k">if</span> <span class="n">adtype</span> <span class="o">=</span> <span class="no">ObjectSpace</span><span class="o">.</span><span class="n">each_object</span><span class="p">(</span><span class="no">AdsController</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">a</span><span class="o">|</span> <span class="nb">p</span> <span class="n">a</span><span class="o">.</span><span class="n">params</span><span class="o">[</span><span class="ss">:adtype</span><span class="o">].</span><span class="n">keys</span> <span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="k">unless</span> <span class="n">a</span><span class="o">.</span><span class="n">params</span><span class="o">[</span><span class="ss">:adtype</span><span class="o">]</span> <span class="o">==</span> <span class="kp">nil</span><span class="p">}</span>
+    <span class="vi">@size</span> <span class="o">=</span> <span class="k">case</span> <span class="n">adtype</span>
+    <span class="c1"># customize your sizes and conditions</span>
+      <span class="k">when</span> <span class="mi">1</span>
+         <span class="s1">&#39;150x100&#39;</span>
+       <span class="k">when</span> <span class="mi">2</span>
+         <span class="s1">&#39;200x150&#39;</span>
+       <span class="k">when</span> <span class="mi">3</span>
+         <span class="s1">&#39;250x200&#39;</span>
+       <span class="k">else</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+         <span class="s1">&#39;250x250&#39;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">return</span> <span class="vi">@size</span> <span class="o">||</span> <span class="kp">false</span>
+<span class="k">end</span>
+
+<span class="c1">#modify this as you normally would, but without the :resize_to parameter</span>
+<span class="n">has_attachment</span> <span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="ss">:image</span><span class="p">,</span>
+                <span class="ss">:storage</span> <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span>
+                <span class="ss">:max_size</span> <span class="o">=&gt;</span> <span class="mi">500</span><span class="o">.</span><span class="n">kilobytes</span><span class="p">,</span>
+                <span class="ss">:path_prefix</span> <span class="o">=&gt;</span> <span class="s2">&quot;public/images/&quot;</span>
+<span class="n">validates_as_attachment</span>
+</pre>
+</div>
+
+
+<p>2. Add this to attachment-fu.rb (after  the definition for  "has_attachment"</p>
+
+
+<div class="highlight"><pre><span class="c1"># ...</span>
+<span class="c1"># this allows for dynamic resizing written in the model itself - PS</span>
+   <span class="n">options</span><span class="o">[</span><span class="ss">:resize_to</span><span class="o">]</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">find_size</span> <span class="k">if</span> <span class="nb">self</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="n">find_size</span><span class="p">)</span> <span class="ow">and</span> <span class="n">find_size</span> <span class="o">!=</span> <span class="kp">false</span>
+<span class="c1"># ...</span>
+</pre>
+</div>
+
+ 
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">mla</span>
+<span class="date">September 22, 2007</span>
+</div>
+<div class="body">
+<p>This wasn't working for me. Calling public_filename(:thumb) was always returning the full version since full_filename() is no longer honoring the thumbnail parameter.</p>
+
+<p>This does seem to work for me, however.</p>
+
+
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">full_filename</span><span class="p">(</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+  <span class="n">file_system_path</span> <span class="o">=</span> <span class="p">(</span><span class="n">thumbnail</span> <span class="p">?</span> <span class="n">thumbnail_class</span> <span class="p">:</span> <span class="nb">self</span><span class="p">)</span><span class="o">.</span><span class="n">attachment_options</span><span class="o">[</span><span class="ss">:path_prefix</span><span class="o">]</span>
+  <span class="n">thumbnail</span> <span class="o">||=</span> <span class="nb">self</span><span class="o">.</span><span class="n">thumbnail</span>
+  <span class="n">subdir</span> <span class="o">=</span> <span class="n">thumbnail</span> <span class="p">?</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">to_s</span> <span class="p">:</span> <span class="s1">&#39;full&#39;</span>
+  <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">RAILS_ROOT</span><span class="p">,</span> <span class="n">file_system_path</span><span class="p">,</span> <span class="n">subdir</span><span class="p">,</span> <span class="n">thumbnail_name_for</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">thumbnail_name_for</span><span class="p">(</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+  <span class="n">extension</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="sr">/\.\w+$/</span><span class="p">)</span>
+  <span class="s2">&quot;</span><span class="si">#{</span><span class="n">attachment_path_id</span><span class="o">.</span><span class="n">to_s</span><span class="si">}#{</span><span class="n">extension</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://agil-e.com">Markus</a></span>
+<span class="date">October 25, 2007</span>
+</div>
+<div class="body">
+<p>Hi!</p>
+
+<p>I think that customizing filenames should be in attacment_fu by default, but it seems that the people at TechnoWeenie no longer develop this plugin (at least for the seven past months). I had made my approach to this topic in a different way than you.</p>
+
+<p>Basically, I hook the filename itself before the whole attachment being saved. This is made with a simple method and before callback. Works well when we are keepping the filename bound to its owner model's name or whatever.</p>
+
+<p>For creations:</p>
+
+
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">before_create</span>
+<span class="nb">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;some-name-taken-out-from-othe-model-or-filename-normalization&quot;</span> <span class="c1"># The file isn&#39;t yet save so we change the filename itself without touching any other thing. The thumbnails will be saved using this filename as well.</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+
+<p>The example above could be a before_add statement in a model association, which is the case I are actually using in muy application. Remember that in Rails versions prior to 2.0 the before_add statement only works if you do model.association << object</p>
+
+<p>For updates:</p>
+
+
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">filename!</span><span class="p">(</span><span class="n">new_filename</span><span class="p">)</span>
+<span class="nb">self</span><span class="o">.</span><span class="n">temp_path</span> <span class="o">=</span> <span class="n">full_filename</span> <span class="c1"># This tells attachment_fu where the old file is and that in the save method it has to rename it.</span>
+<span class="n">serf</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">new_filename</span> <span class="c1"># This simply override the actual filename to, when attachment_fu saves the record, rewrite all files, including thumbnails, using this filename.</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<p>And that's all. Enjoy it!</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">Steven G</span>
+<span class="date">November 29, 2007</span>
+</div>
+<div class="body">
+<p>Great article!</p>
+
+<p>I am struggling a bit with custom directories though. My assets are called "mugshots" and they belong_to :artist. I am trying to hook this up so that the shots get saved in a folder with the artists name.</p>
+
+<p>http://pastie.caboo.se/123257</p>
+
+<p>I can save the main image successfully in the artist folder, but oddly enough the thumbnails are still defaulting to numbered folders.</p>
+
+<p>Any ideas?</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.johnmurch.com">John Murch</a></span>
+<span class="date">December 05, 2007</span>
+</div>
+<div class="body">
+<p>Hey,</p>
+
+<p>Thanks for the post about the extra credit: like if your attachments belong to another model (like a user) and you need to store the photo_id but I had a question about this that I can not seem to find the answer to.</p>
+
+<p>Basically I am building a social network where you have to upload images and want to store the photo_id of the image into different models. For example, a Users Profile would be one, a Group would be another, and possible even a blog could have its own image. I was looking for a DRY method that would allow me to easily store these photo_id once they upload the photo and update the model with these photo_id.</p>
+
+<p>So you said you can use:</p>
+
+
+<div class="highlight"><pre><span class="n">before_thumbnail_saved</span> <span class="k">do</span> <span class="o">|</span><span class="n">record</span><span class="p">,</span> <span class="n">thumbnail</span><span class="o">|</span>
+  <span class="n">thumbnail</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">user_id</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<p>But how does this work if you have 3 models you need to store the id of the photo you just uploaded? Or if anyone else has any ideas, they would be greatly appreciated.
+  
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://omarvelous.com">Omarvelou</a></span>
+<span class="date">February 10, 2008</span>
+</div>
+<div class="body">
+<p>John,</p>
+
+<p>Polymorphic Associations is what you'd need. Look into that.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">a</span>
+<span class="date">February 25, 2008</span>
+</div>
+<div class="body"><p>Hey, Thanks for the post about the extra credit: like if your attachments belong to another model (like a user) and you need to store the photo_id but I had a question about this that I can not seem to find the answer to. Basically I am building a social network where you have to upload images and want to store the photo_id of the image into different models. For example, a Users Profile would be one, a Group would be another, and possible even a blog could have its own image. I was looking for a DRY method that would allow me to easily store these photo_id once they upload the photo and update the model with these photo_id. So you said you can use before_thumbnail_saved do |record, thumbnail| thumbnail.user_id = record.user_id end But how does this work if you have 3 models you need to store the id of the photo you just uploaded? Or if anyone else has any ideas, they would be greatly appreciated.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://kill3rb.blogspot.com">buddhi</a></span>
+<span class="date">March 04, 2008</span>
+</div>
+<div class="body">
+<p>I wanted to save all files in a single directory yet change the names.. but gave me so many errors since thumbnail does not exist on creation time.. and we have to use self.thumbnail. did some mods to the code and hope this would be the best place to post the changes (i also got the inspiration to modify the code from here).. thanks for great tips.</p>
+
+<p>modified code will hopefully work for any thumbnail. doesnt have to specify "thumb1", "thumb2" trying to minimize the code size and keeping it generic as possible.</p>
+
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Photo</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+	<span class="n">has_attachment</span>	<span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="ss">:image</span><span class="p">,</span> 
+              							<span class="ss">:storage</span> <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span> 
+              							<span class="ss">:size</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="n">kilobyte</span> <span class="o">.</span><span class="n">.</span> <span class="mi">10</span><span class="o">.</span><span class="n">megabytes</span><span class="p">,</span>
+              							<span class="ss">:resize_to</span> <span class="o">=&gt;</span> <span class="s1">&#39;500&gt;&#39;</span><span class="p">,</span>
+                            <span class="ss">:thumbnails</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:thumb</span> <span class="o">=&gt;</span> <span class="s1">&#39;125&#39;</span> <span class="p">},</span>
+              							<span class="ss">:path_prefix</span> <span class="o">=&gt;</span> <span class="s1">&#39;public/images/product_pics&#39;</span><span class="p">,</span>
+                            <span class="ss">:processor</span>    <span class="o">=&gt;</span> <span class="s1">&#39;MiniMagick&#39;</span>
+  <span class="n">validates_as_attachment</span>
+  <span class="n">belongs_to</span>  <span class="ss">:product</span>
+
+  <span class="k">def</span> <span class="nf">full_filename</span><span class="p">(</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+    <span class="n">file_system_path</span> <span class="o">=</span> <span class="p">(</span><span class="n">thumbnail</span> <span class="p">?</span> <span class="n">thumbnail_class</span> <span class="p">:</span> <span class="nb">self</span><span class="p">)</span><span class="o">.</span><span class="n">attachment_options</span><span class="o">[</span><span class="ss">:path_prefix</span><span class="o">]</span>
+    <span class="vi">@thumb</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">thumbnail</span> <span class="k">unless</span> <span class="p">(</span><span class="vi">@thumb</span> <span class="o">=</span> <span class="n">thumbnail</span><span class="p">)</span> <span class="c1">#checks if thumbnails info already exisit</span>
+    <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">RAILS_ROOT</span><span class="p">,</span> <span class="n">file_system_path</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">thumbnail_name_view</span><span class="p">(</span><span class="vi">@thumb</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">code</span><span class="p">))</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">thumbnail_name_view</span><span class="p">(</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">asset</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+    <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;_</span><span class="si">#{</span><span class="n">thumbnail</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">unless</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">blank?</span>  <span class="c1">#sets suffix by the name of the thumbnail set in has_attachment options</span>
+    <span class="n">extension</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="sr">/\.\w+$/</span><span class="p">)</span> <span class="c1"># extracts extension</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">asset</span><span class="si">}#{</span><span class="n">suffix</span><span class="si">}#{</span><span class="n">extension</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">end</span>
+  
+  <span class="n">before_thumbnail_saved</span> <span class="k">do</span> <span class="o">|</span><span class="n">record</span><span class="p">,</span> <span class="n">thumbnail</span><span class="o">|</span>
+      <span class="n">thumbnail</span><span class="o">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">product_id</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre>
+</div>
+
+
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.nicolasblock.com">nicolas b</a></span>
+<span class="date">June 06, 2008</span>
+</div>
+<div class="body"><p>I'd been playing with this for a while. I needed unique filenames so that i could use paranoid delete and based on your example i chose this naming scheme: public/images/photos/small/parent_id.extension. One of my goals was to make image tags easy within the app. I wanted to be able to write something like image_tag("photos/large#{photo.id}#{photo.extension}").This works for me:</p>
+
+
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">full_filename</span><span class="p">(</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+  <span class="n">file_system_path</span> <span class="o">=</span> <span class="p">(</span><span class="n">thumbnail</span> <span class="p">?</span> <span class="n">thumbnail_class</span> <span class="p">:</span> <span class="nb">self</span><span class="p">)</span><span class="o">.</span><span class="n">attachment_options</span><span class="o">[</span><span class="ss">:path_prefix</span><span class="o">]</span>
+  <span class="c1">#stole this out of the attachment fu controller.. greek to me</span>
+  <span class="n">ext</span> <span class="o">=</span> <span class="kp">nil</span>
+  <span class="n">basename</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">gsub</span><span class="sr"> /\.\w+$/</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span> <span class="s1">&#39;&#39;</span>
+  <span class="k">end</span>
+  <span class="k">case</span> <span class="nb">self</span><span class="o">.</span><span class="n">thumbnail</span>
+  <span class="k">when</span> <span class="s2">&quot;medium&quot;</span>
+    <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">RAILS_ROOT</span><span class="p">,</span> <span class="n">file_system_path</span><span class="p">,</span> <span class="s1">&#39;medium&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="nb">self</span><span class="o">.</span><span class="n">parent_id</span><span class="o">.</span><span class="n">to_s</span><span class="si">}#{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">when</span> <span class="s2">&quot;small&quot;</span>
+    <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">RAILS_ROOT</span><span class="p">,</span> <span class="n">file_system_path</span><span class="p">,</span> <span class="s1">&#39;small&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="nb">self</span><span class="o">.</span><span class="n">parent_id</span><span class="o">.</span><span class="n">to_s</span><span class="si">}#{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">RAILS_ROOT</span><span class="p">,</span> <span class="n">file_system_path</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="nb">self</span><span class="o">.</span><span class="n">parent_id</span><span class="o">.</span><span class="n">to_s</span><span class="si">}#{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<p>I hope this is helpful to anyone searching for a way to make unique filenames with attachment_fu</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.nicolasblock.com">nicolas b</a></span>
+<span class="date">June 06, 2008</span>
+</div>
+<div class="body"><p>overwrite thumbnail_name_for(thumbnail = nil) in attachment_fu.rb to change the name stored in the database.  plugins are loaded when the server starts, so don't make the mistake i did and spend an hour wondering why your changes aren't working: restart the server.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">dan</span>
+<span class="date">August 12, 2008</span>
+</div>
+<div class="body">
+<p>nicolas b if this works for you it should work for me right I've got a few errors here m8!</p>
+
+<p>Anyway if you could pasting the model file I would like so greatfull!</p></div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://mobitv.com">Ben Pellow</a></span>
+<span class="date">November 05, 2008</span>
+</div>
+<div class="body">
+<p>Despite correctly renaming the file itself and saving it in the correct location, the name of the file in the 'filename' field in the database doesn't get updated...it stays the same as the name of the file itself instead of getting renamed.</p>
+
+<p>Any idea how to get the filename field to update?</p>
+
+<p>For reference, here's my model:</p>
+
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">DevicePicture</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:manufacturer_model</span>  
+  
+  <span class="n">has_attachment</span> <span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="ss">:image</span><span class="p">,</span>
+  				 <span class="ss">:storage</span>	   <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span>
+  				 <span class="ss">:max_size</span>	   <span class="o">=&gt;</span> <span class="mi">500</span><span class="o">.</span><span class="n">kilobytes</span><span class="p">,</span>
+  				 <span class="ss">:resize_to</span>    <span class="o">=&gt;</span> <span class="s1">&#39;384x256&gt;&#39;</span><span class="p">,</span>  				 
+  				 <span class="ss">:thumbnails</span>   <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:thumb</span> <span class="o">=&gt;</span> <span class="s1">&#39;98&gt;&#39;</span> <span class="p">},</span>
+  				 <span class="ss">:path_prefix</span> <span class="o">=&gt;</span> <span class="s1">&#39;public/device_pictures/&#39;</span>
+  				 
+  <span class="n">validates_as_attachment</span>
+  
+  <span class="k">def</span> <span class="nf">full_filename</span><span class="p">(</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+    <span class="n">file_system_path</span> <span class="o">=</span> <span class="p">(</span><span class="n">thumbnail</span> <span class="p">?</span> <span class="n">thumbnail_class</span> <span class="p">:</span> <span class="nb">self</span><span class="p">)</span><span class="o">.</span><span class="n">attachment_options</span><span class="o">[</span><span class="ss">:path_prefix</span><span class="o">]</span>
+    <span class="k">case</span> <span class="nb">self</span><span class="o">.</span><span class="n">thumbnail</span>
+    <span class="k">when</span> <span class="s2">&quot;thumb&quot;</span>
+      <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">RAILS_ROOT</span><span class="p">,</span> <span class="n">file_system_path</span><span class="p">,</span> <span class="s1">&#39;thumb&#39;</span><span class="p">,</span> <span class="n">thumbnail_name_for</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">parent_id</span><span class="p">))</span>
+    <span class="k">else</span>
+      <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">RAILS_ROOT</span><span class="p">,</span> <span class="n">file_system_path</span><span class="p">,</span> <span class="s1">&#39;fullsize&#39;</span><span class="p">,</span> <span class="n">thumbnail_name_for</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+    <span class="k">end</span>
+  <span class="k">end</span>      
+
+  <span class="k">def</span> <span class="nf">thumbnail_name_for</span><span class="p">(</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">asset</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+    <span class="n">extension</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="sr">/\.\w+$/</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">asset</span><span class="si">}#{</span><span class="n">extension</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">end</span>     
+<span class="k">end</span>
+</pre>
+</div>
+
+
+</div>
+
+
+
+
+<p class="note">New comments are disabled right now. Once we finish migrating this blog, we'll restore them.</p>
 </div>
 
 </div>

@@ -1,6 +1,7 @@
 --- 
 layout: post
 title: How to customize attachment_fu file names
+comments: 6
 ---
 For uploading files, it's pretty hard to beat [attachment_fu](http://svn.techno-weenie.net/projects/plugins/attachment_fu/). But it can be overkill for smaller projects.
 

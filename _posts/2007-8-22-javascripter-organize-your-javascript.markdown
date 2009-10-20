@@ -1,6 +1,7 @@
 --- 
 layout: post
 title: "Javascripter: Organize your javascript"
+comments: 5
 ---
 Just like [Styler](/2007/05/03/styler-stylesheets-made-easy), you can use Javascripter to keep javascript organized in your application.
 

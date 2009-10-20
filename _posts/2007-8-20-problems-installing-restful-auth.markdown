@@ -1,6 +1,7 @@
 --- 
 layout: post
 title: Problems installing restful_auth?
+comments: 7
 ---
 When installing <code>restful_authentication</code>, you run this command:
 

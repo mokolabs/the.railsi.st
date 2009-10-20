@@ -227,6 +227,245 @@ function hivelogic_enkoder(){var kode=
 <div class="date">May 03, 2007</div>
 </div>
 
+
+<h2 id="comments">Comments</h2>
+
+
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://powerset.com">toby</a></span>
+<span class="date">June 17, 2007</span>
+</div>
+<div class="body">
+<p>hey patrick, i finally got around to installing this on a work project. killer!</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://rikkus.info">Rik Hemsley</a></span>
+<span class="date">July 01, 2007</span>
+</div>
+<div class="body">
+<p>Works perfectly, just what I needed, thanks!</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://richarddcrowley.org/">Richard Crowley</a></span>
+<span class="date">July 09, 2007</span>
+</div>
+<div class="body">
+<p>This is very cool, thank you.  And also, nice last name, Other Mr. Crowley.</p>
+
+<p>However, I found one problem: when I installed the plugin and began using it, Ruby complained that I was calling gsub() on a Hash.  Tracing back, I found that commenting the line</p>
+
+
+<div class="highlight"><pre><span class="vi">@title</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/&lt;\/?[^&gt;]*&gt;/</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>in headliner.rb fixed the problem, but I'm confused as to why this was there anyway.  Shouldn't that line be in the section that runs if options.is_a? String?</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://ambethia.com">Jason L Perry</a></span>
+<span class="date">July 09, 2007</span>
+</div>
+<div class="body">
+<p>Yes, that last commit just totally borked our application. Something like this might be more appropriate:</p>
+
+
+<div class="highlight"><pre>  
+   <span class="k">def</span> <span class="nf">title</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">headline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="o">-</span>    <span class="c1"># Remove markup from title</span>
+<span class="o">-</span>    <span class="vi">@title</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/&lt;\/?[^&gt;]*&gt;/</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="o">-</span>  
+     <span class="c1"># Save title</span>
+     <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">is_a?</span> <span class="nb">String</span>
+<span class="o">-</span>       <span class="vi">@title</span> <span class="o">=</span> <span class="n">options</span>
+<span class="o">+</span>      <span class="vi">@title</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/&lt;\/?[^&gt;]*&gt;/</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre>
+</div>
+
+
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://ambethia.com">Jason L Perry</a></span>
+<span class="date">July 09, 2007</span>
+</div>
+<div class="body">
+<p>Sorry, here: http://pastie.caboo.se/77309</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">July 16, 2007</span>
+</div>
+<div class="body">
+<p>My bad, guys. Should be fixed now.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">Jonathan Dickinson</span>
+<span class="date">July 25, 2007</span>
+</div>
+<div class="body">
+<p>Hectic! I love the simplicity!</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://davidbolton.net">Dave Bolton</a></span>
+<span class="date">July 26, 2007</span>
+</div>
+<div class="body">
+<p>Thanks for introducing this at the Sydney Rails Group Patrick, works very nicely.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://thelucid.com">Jamie Hill</a></span>
+<span class="date">August 22, 2007</span>
+</div>
+<div class="body">
+<p>I like this a lot. How about a variation for meta descriptions, keywords etc.?</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">August 22, 2007</span>
+</div>
+<div class="body">
+<p>That's probably beyond the scope of Headliner, Jamie.</p>
+
+<p>Keywords aren't useful these days because of abuse by SEO folk, but description is still pretty useful, of course. However, many applications don't have useful descriptions for each page.</p>
+
+<p>I'll consider doing a plugin in the future (if I find myself needing to add descriptions)... but I'm sure you can whip up a simple helper if you need this now.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://nick.zadrozny.com/">Nick Zadrozny</a></span>
+<span class="date">August 27, 2007</span>
+</div>
+<div class="body">
+<p>Hey buddy. I remembered when we talked about this plugin at Korova back in the day and I didn't have an example of my usual approach to titles. The one I was experimenting with back then was overcomplex anyway. Anyway I finally got around to typing up my current technique at http://nick.zadrozny.com/post/9840594</p>
+
+<p>So the downside to my approach is memorization and rote addition to every new project—which is more than enough to justify headliner, IMO. But since I've already paid that price the upside is it's very simple, trivial to customize and extend, non-magical, just as flexible, and potentially even more dry for multiple layout files. But to each his own.</p>
+
+<p>You might like that textilize_without_paragraph bit in #t(). Makes for nice quote marks and apostrophes.</p>
+
+<p>(Oh, by the way, I'm going to try to post the occasional Rails snippet at my tumblelog there but may end up creating a separate blog entirely for that stuff. Some Day™)</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://nick.zadrozny.com/">Nick Zadrozny</a></span>
+<span class="date">August 27, 2007</span>
+</div>
+<div class="body">
+<p>Oops. No comment formatting? :\</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">August 31, 2007</span>
+</div>
+<div class="body">
+<p>Yeah, I like your use of textilize_without_paragraph. Maybe I can roll that into Headliner down the road. Web typography can be tricky, though... people tend to have their own way of dealing with such things.</p>
+
+<p>(Errr... you can do some HTML in comments, I believe.)</p>
+
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.ridgelinemediallc.com">Jason Cave</a></span>
+<span class="date">November 09, 2007</span>
+</div>
+<div class="body">
+<p>Great plugin! I have been looking for something like this for a while. Have been adding it to many of my sites.  Nice job.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.divisionbyzero.com.au/">Scott Barr</a></span>
+<span class="date">December 04, 2007</span>
+</div>
+<div class="body">
+<p>I just stumbled across this and it solves my page title problems perfectly. Thanks for the great plugin Patrick :)</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://codingrants.blogspot.com">Cameron Barrie</a></span>
+<span class="date">April 29, 2008</span>
+</div>
+<div class="body">
+<p>I've added a description and keywords methods to headliner, so you can add both/either description or keywords meta tags in the same way.. I know they're not really used that much, but some clients are still demanding them.... Where should I send the source to?</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://weplaythis.com">Gilbert</a></span>
+<span class="date">June 22, 2008</span>
+</div>
+<div class="body">
+<p>Nice little plugin! Thanks for your work!</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://kpumuk.info/">Dmytro Shteflyuk</a></span>
+<span class="date">June 28, 2008</span>
+</div>
+<div class="body">
+<p>Do you have plans to put your plugin on Github? We are using submodules in our applications to manage plugins, and it would be pretty cool to have your plugin submoduled too.</p>
+
+<p>Thanks, it's really useful</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.borism.net">Boris Masis</a></span>
+<span class="date">September 24, 2008</span>
+</div>
+<div class="body">
+<p>Perfect, exactly what I was looking for.</p>
+</div>
+
+
+
+
+<p class="note">New comments are disabled right now. Once we finish migrating this blog, we'll restore them.</p>
 </div>
 
 </div>

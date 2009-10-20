@@ -1,6 +1,7 @@
 --- 
 layout: post
 title: Sass version of Eric Meyer's Reset
+comments: 1
 ---
 Here's a Sass version of [Eric Meyer's CSS reset](http://railsontherun.com/) (the "Resetting Again" version).
 

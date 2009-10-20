@@ -1,6 +1,7 @@
 --- 
 layout: post
 title: "Headliner: DRY up your page titles"
+comments: 10
 ---
 Normally, if your Rails application has lots of actions and a shared layout, you might find yourself setting custom page title names in your controllers.
 

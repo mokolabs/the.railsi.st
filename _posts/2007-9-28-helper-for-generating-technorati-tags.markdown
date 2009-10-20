@@ -1,6 +1,7 @@
 --- 
 layout: post
 title: Helper for generating Technorati tags
+comments: 4
 ---
 Need to support [Technorati tags](http://technorati.com/help/tags.html) in your application?
 

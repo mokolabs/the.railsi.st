@@ -208,6 +208,117 @@ for the controller will be created. (Existing javascripts will be ignored.)</p>
 <div class="date">August 22, 2007</div>
 </div>
 
+
+<h2 id="comments">Comments</h2>
+
+
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://lachstock.com.au">Lachlan Hardy</a></span>
+<span class="date">August 22, 2007</span>
+</div>
+<div class="body">
+<p>This is very hot and makes me feel all warm and fuzzy inside. Thanks!</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://infovore.org">tom armitage</a></span>
+<span class="date">August 22, 2007</span>
+</div>
+<div class="body">
+<p>Of course, you really want to be handling IE-specific javascripts too, much like you do in Styler. There are good reasons for this - the obvious one we have at work is faking max-width in IE6.</p>
+
+<p>The only problem is, if you have both an IE6 specific stylesheet and an IE6 specific javascript... they both need to be inside the same conditional comment. This is hard when your two systems are decoupled, but easier when you treat js and css in similar fashions.</p>
+
+<p>Coincidentally, my IE-specific plugin (http://infovore.org/archives/2006/12/10/handling-ie-specific-stylesheets-with-a-rails-plugin/) does exactly that...</p>
+
+<p>...but beyond that, it's a good idea, and I like your app/controller specific features!</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.cuespace.com/">Andreas Roedl</a></span>
+<span class="date">August 22, 2007</span>
+</div>
+<div class="body">
+<p>Beautiful! It's exactly what I'm looking for.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://thelucid.com">Jamie Hill</a></span>
+<span class="date">August 22, 2007</span>
+</div>
+<div class="body">
+<p>Looks great. Are namespaced controllers catered for? e.g. Admin::ProductsController --> javascripts/admin/products.js</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">August 22, 2007</span>
+</div>
+<div class="body">
+<p>@Tom -- Good point. Perhaps I'll release a coupled version of the two plugins, or figure out some other way to support conditionals for javascript.</p>
+
+<p>@Jamie -- Namespaced controllers aren't supported yet, but check back in a day or two.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://www.steelpixel.com">Josh Owens</a></span>
+<span class="date">August 23, 2007</span>
+</div>
+<div class="body">
+<p>This seems unneeded.  Why would you release this when the new edge has support for easy inclusion of multiple javascript files?  Even better, it munges them all into one file to cut down on http requests and speed up page loading.</p>
+
+<p>Just curious as to why :)</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author"><a href="http://the.railsi.st">Patrick Crowley</a></span>
+<span class="date">August 23, 2007</span>
+</div>
+<div class="body">
+<p>Not everyone's on Edge, Josh.
+<br />
+<br /><br />
+<br />
+Plus <code>javascript_include_tag :all</code> will bundle <em>all</em> of your javascripts, so if you need to include javascripts for specific actions or controllers, you're out of luck.
+<br />
+<br /><br />
+<br />
+That said, asset packaging is good stuff. Styler and Javascripter could both benefit from having it.</p>
+</div>
+
+<!-- Comment -->
+<div class="comment">
+<div class="attribution">
+<span class="author">Ben Ong</span>
+<span class="date">August 27, 2008</span>
+</div>
+<div class="body">
+<p>This is a very handy plugin.  Is there a way to select the order in which the javascript files are loaded?  (i.e. load jquery before application.js)</p>
+
+<p>Thanks,</p>
+
+<p>Ben</p>
+</div>
+
+
+
+
+<p class="note">New comments are disabled right now. Once we finish migrating this blog, we'll restore them.</p>
 </div>
 
 </div>

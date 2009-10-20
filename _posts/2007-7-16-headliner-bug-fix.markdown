@@ -1,6 +1,7 @@
 --- 
 layout: post
 title: Headliner bug fix
+comments: 8
 ---
 Thanks to Jason Perry and Richard Crowley for catching a bug in the last Headliner update.
 

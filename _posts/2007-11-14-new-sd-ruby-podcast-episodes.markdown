@@ -1,6 +1,7 @@
 --- 
 layout: post
 title: New SD Ruby podcast episodes
+comments: 3
 ---
 In case you don't subscribe to the [SD Ruby podcast](http://sdruby.org/), we just uploaded a huge batch of fresh episodes.
 
