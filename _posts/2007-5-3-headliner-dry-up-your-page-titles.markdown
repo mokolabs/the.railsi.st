@@ -3,6 +3,8 @@ layout: post
 title: "Headliner: DRY up your page titles"
 comments: 10
 ---
+Headliner is a Rails plugin that makes it easier to assign and format page titles from your views.
+
 Normally, if your Rails application has lots of actions and a shared layout, you might find yourself setting custom page title names in your controllers.
 
 Here's an example:
@@ -27,7 +29,17 @@ This works okay... but page titles don't really belong in controllers, do they?
 
 So, by moving these titles into your views, we can DRY things up a bit and reinforce the MVC design pattern that's so fundamental to Ruby on Rails.
 
-<h2>Usage</h2>
+
+##  Install
+
+To install, just add Headliner to your `vendor/plugins` directory:
+
+{% highlight erb %}
+script/plugin install git://github.com/mokolabs/headliner.git
+{% endhighlight %}
+
+
+## Usage
 
 First, add this code to your main layout:
 
@@ -54,7 +66,8 @@ When views are rendered, the page title will be included in the right spots:
 </body>
 {% endhighlight %}
 
-<h2>Options</h2>
+
+## Options
 
 Use these options to customize the title format:
 
@@ -73,7 +86,8 @@ And here are a few examples to give you ideas.
 <%= title :reverse => true, :prefix => false %>
 {% endhighlight %}
 
-<h2>Dealing with special pages</h2>
+
+## Dealing with special pages
 
 How do you set the page title without showing it in the view?
 
@@ -87,7 +101,8 @@ What if your view headline is different from your page title?
 <%= title "My page title", "My headline" %>
 {% endhighlight %}
 
-<h2>Mr. T says, &#8216;Use my method, fool!&#8217;</h2>
+
+## Mr. T says, ‘Use my method, fool!’
 
 Just like ERB's [HTML safe method](http://www.ruby-doc.org/stdlib/libdoc/erb/rdoc/), you can invoke Headliner with a single letter alias.
 
@@ -95,16 +110,19 @@ Just like ERB's [HTML safe method](http://www.ruby-doc.org/stdlib/libdoc/erb/rdo
 <h1><%=t "My page title" %></h1>
 {% endhighlight %}
 
-<h2>How does it work?</h2>
+Note: this alias conflicts with the translate method in the [Rails Internationalization (I18n) API](http://guides.rubyonrails.org/i18n.html), since it provides the same alias. If you need I18n support, you should use one of [these](http://github.com/nivanson/headliner) [forks](http://github.com/galfert/headliner) on Github.
+
+
+## How does it work?
 
 Ruby on Rails renders actions *before* inserting them into layouts. So, if you set a variable in your view, it will be accessible in your layout. But, at first glance, it looks like you're using a variable (in the head) before it's been assigned a value (in the body). Cool, huh?
 
-<h2>Credits</h2>
 
-Special thanks to Nick Zadrozny and Jordan Fowler for their input.
+## Contributors
 
-<h2>Install</h2>
+Special thanks to James Chan, Nick Zadrozny, and Jordan Fowler.
 
-{% highlight bash %}
-script/plugin install git://github.com/mokolabs/headliner.git
-{% endhighlight %}
+
+## Feedback
+
+Comments and patches welcome at [http://github.com/mokolabs/headliner/](http://github.com/mokolabs/headliner/).
