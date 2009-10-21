@@ -1,6 +1,6 @@
 ### Overview
 
-This app contains [the.railsi.st](http://the.railsi.st/), my Ruby/Rails blog and the code used to generate it.
+This app contains [the.railsi.st](http://the.railsi.st/), my Ruby on Rails blog, and the code used to generate it.
 
 The blog is created using the [Jekyll](http://github.com/mojombo/jekyll), the blog-aware, static site generator. Jekyll allows you to easily publish a blog or other static website without a database or persistent blogging application.
 
