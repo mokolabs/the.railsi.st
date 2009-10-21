@@ -11,12 +11,12 @@ $(document).ready(function() {
       var content = $(this).contents().width();
       $(this).hover(
         function() {
-          if (content > block && content < 1020) {
+          if (content > block && content < 1000) {
             $(this).animate({ width: content + "px"}, 350);
           }
         },
         function() {
-          if (content > 680 && content < 1020) {
+          if (content > 680 && content < 1000) {
             $(this).animate({ width: "680px" }, 450);
           }
         }
@@ -26,7 +26,7 @@ $(document).ready(function() {
 
   // Add scrollbar to super long code blocks
   $(".highlight").each(function(){
-    if ($(this).contents().width() > 1020) {
+    if ($(this).contents().width() > 1000) {
       $(this).css("overflow-x", "scroll");
     }
   });

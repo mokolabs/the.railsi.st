@@ -94,7 +94,7 @@ a:hover {
 
 #page {
   margin: 40px auto 20px auto;
-  width: 1050px;
+  width: 1000px;
 }
 
 #header {
@@ -103,11 +103,11 @@ a:hover {
   font-size: 48px;
   font-weight: bold;
   height: 30px;
-  width: 1050px;
+  width: 1000px;
 }
 
 #content {
-  width: 1050px;
+  width: 1000px;
 }
 
 #primary {
@@ -123,7 +123,7 @@ a:hover {
   line-height: 12px;
   margin: 18px 0 0 15px;
   padding-left: 15px;
-  width: 319px;
+  width: 269px;
 }
 
 
