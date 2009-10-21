@@ -9,7 +9,6 @@
 
 {% highlight ruby %}
 def links_from_tags(taglist)
-
   taglist.map do |tag|
     link_to(tag, "http://technorati.com/tag/#{tag.gsub(' ', '+')}", :rel => 'tag')
   end.join("\n")

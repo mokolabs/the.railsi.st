@@ -40,7 +40,7 @@ belongs_to :ad
 def self.find_size
 # Change AdsContoller to the controller of your model and params[adtype].keys to<br/>
 # whatever value you want to test for.<br/>
-if adtype = ObjectSpace.each_object(AdsController) {|a| p a.params[:adtype].keys <br/>unless a.params[:adtype] == nil}
+if adtype = ObjectSpace.each_object(AdsController) {|a| p a.params[:adtype].keys unless a.params[:adtype] == nil}
     @size = case adtype
     # customize your sizes and conditions
       when 1
@@ -49,7 +49,7 @@ if adtype = ObjectSpace.each_object(AdsController) {|a| p a.params[:adtype].keys
          '200x150'
        when 3
          '250x200'
-       else<br/>
+       else
          '250x250'
     end
   end
@@ -58,9 +58,9 @@ end
 
 #modify this as you normally would, but without the :resize_to parameter
 has_attachment :content_type => :image,
-                :storage => :file_system,
-                :max_size => 500.kilobytes,
-                :path_prefix => "public/images/"
+               :storage => :file_system,
+               :max_size => 500.kilobytes,
+               :path_prefix => "public/images/"
 validates_as_attachment
 {% endhighlight %}
 
@@ -215,13 +215,13 @@ end
 
 {% highlight ruby %}
 class Photo < ActiveRecord::Base
-	has_attachment	:content_type => :image, 
-              							:storage => :file_system, 
-              							:size => 1.kilobyte .. 10.megabytes,
-              							:resize_to => '500>',
-                            :thumbnails => { :thumb => '125' },
-              							:path_prefix => 'public/images/product_pics',
-                            :processor    => 'MiniMagick'
+  has_attachment :content_type => :image, 
+                 :storage => :file_system,
+                 :size => 1.kilobyte .. 10.megabytes,
+                 :resize_to => '500>',
+                 :thumbnails => { :thumb => '125' },
+                 :path_prefix => 'public/images/product_pics',
+                 :processor => 'MiniMagick'
   validates_as_attachment
   belongs_to  :product
 
@@ -314,12 +314,12 @@ class DevicePicture < ActiveRecord::Base
   belongs_to :manufacturer_model  
   
   has_attachment :content_type => :image,
-  				 :storage	   => :file_system,
-  				 :max_size	   => 500.kilobytes,
-  				 :resize_to    => '384x256>',  				 
-  				 :thumbnails   => { :thumb => '98>' },
-  				 :path_prefix => 'public/device_pictures/'
-  				 
+                 :storage => :file_system,
+                 :max_size => 500.kilobytes,
+                 :resize_to => '384x256>', 
+                 :thumbnails => { :thumb => '98>' },
+                 :path_prefix => 'public/device_pictures/'
+
   validates_as_attachment
   
   def full_filename(thumbnail = nil)
