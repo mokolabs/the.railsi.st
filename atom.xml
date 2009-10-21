@@ -8,7 +8,7 @@ layout: nil
  <link href="http://the.railsi.st/atom.xml" rel="self"/>
  <link href="http://the.railsi.st/"/>
  <updated>{{ site.time | date_to_xmlschema }}</updated>
- <id>http://the.railsi.st.com/</id>
+ <id>http://the.railsi.st/</id>
  <author>
    <name>Patrick Crowley</name>
    <email>patrick@mokolabs.com</email>
