@@ -7,18 +7,17 @@ $(document).ready(function() {
   // Expand long code blocks on hover
   $(".highlight").each(function(){
     if ($(this).contents().width() > 680) {
+      var block = $(this).width();
+      var content = $(this).contents().width();
       $(this).hover(
         function() {
-          var block = $(this).width();
-          var content = $(this).contents().width();
           if (content > block && content < 1020) {
             $(this).animate({ width: content + "px"}, 350);
           }
         },
         function() {
-          var content = $(this).contents().width();
           if (content > 680 && content < 1020) {
-            $(this).animate({ width: "680px" }, 350);
+            $(this).animate({ width: "680px" }, 450);
           }
         }
       );
