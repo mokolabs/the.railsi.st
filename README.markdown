@@ -6,9 +6,7 @@ The blog is created using the [Jekyll](http://github.com/mojombo/jekyll), the bl
 
 ### Licensing
 
-Feel free to copy this app and use it as the basis for your own Jekyll-based project.
-
-Everything is MIT Licensed, with the exception of the following directories:
+Feel free to copy this app and use it as the basis for your own Jekyll-based project. Everything is MIT Licensed, with the exception of the following directories:
 
 + _posts/
 + images/
