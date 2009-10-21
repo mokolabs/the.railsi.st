@@ -119,8 +119,9 @@ a:hover {
 #sidebar {
   border-left: 1px dotted #DDDDDD;
   float: right;
-  font-size: 14px;
-  margin: 0 0 0 15px;
+  font-size: 12px;
+  line-height: 12px;
+  margin: 18px 0 0 15px;
   padding-left: 15px;
   width: 319px;
 }
@@ -142,6 +143,16 @@ a:hover {
 
 /* SIDEBAR */
 
+#intro {
+  font-size: 14px;
+  line-height: 16px;
+  margin: -12px 0 36px 0;
+}
+
+#sidebar h2 {
+  margin: 18px 0 12px 0;
+}
+
 #sidebar a {
   color: #780808;
   text-decoration: none;
@@ -151,23 +162,14 @@ a:hover {
   text-decoration: underline;
 }
 
-#sidebar h3 a:link,
-#sidebar h3 a:visited {
-  color: #000;
-}
-
-#sidebar h3 a:hover,
-#sidebar h3 a:active {
-  background: transparent; text-decoration: underline;
-}
-
 #sidebar ul {
   list-style-type: none; 
   padding: 0;
-  margin: 1.2em 0;
+  margin: 14px 0;
 }
 
 #sidebar li { 
+  line-height: 14px;
   margin: 0;
   padding: 1px 0;
 }

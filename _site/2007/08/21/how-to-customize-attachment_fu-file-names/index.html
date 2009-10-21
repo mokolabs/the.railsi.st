@@ -22,13 +22,15 @@
 <div id="content">
 
 <div id="sidebar">
-<h2>About</h2>
-
+<div id="intro">
+  
 <p>the.railsi.st is <a href="http://mokolabs.com">Patrick Crowley</a>.</p>
 
 <p>I'm a Ruby developer and this blog is a record of my experiences using Ruby on Rails to build web apps.</p>
 
 <p>I also run <a href="http://sdruby.org">SD Ruby</a>, a local Ruby group in San Diego known for its <a href="http://sdruby.org/podcast">podcast</a>.</p>
+
+</div>
 
 <h2>Plugins</h2>
 
@@ -264,7 +266,7 @@ public/images/mugshots/thumb/2.png
 <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">find_size</span>
 <span class="c1"># Change AdsContoller to the controller of your model and params[adtype].keys to&lt;br/&gt;</span>
 <span class="c1"># whatever value you want to test for.&lt;br/&gt;</span>
-<span class="k">if</span> <span class="n">adtype</span> <span class="o">=</span> <span class="no">ObjectSpace</span><span class="o">.</span><span class="n">each_object</span><span class="p">(</span><span class="no">AdsController</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">a</span><span class="o">|</span> <span class="nb">p</span> <span class="n">a</span><span class="o">.</span><span class="n">params</span><span class="o">[</span><span class="ss">:adtype</span><span class="o">].</span><span class="n">keys</span> <span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="k">unless</span> <span class="n">a</span><span class="o">.</span><span class="n">params</span><span class="o">[</span><span class="ss">:adtype</span><span class="o">]</span> <span class="o">==</span> <span class="kp">nil</span><span class="p">}</span>
+<span class="k">if</span> <span class="n">adtype</span> <span class="o">=</span> <span class="no">ObjectSpace</span><span class="o">.</span><span class="n">each_object</span><span class="p">(</span><span class="no">AdsController</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">a</span><span class="o">|</span> <span class="nb">p</span> <span class="n">a</span><span class="o">.</span><span class="n">params</span><span class="o">[</span><span class="ss">:adtype</span><span class="o">].</span><span class="n">keys</span> <span class="k">unless</span> <span class="n">a</span><span class="o">.</span><span class="n">params</span><span class="o">[</span><span class="ss">:adtype</span><span class="o">]</span> <span class="o">==</span> <span class="kp">nil</span><span class="p">}</span>
     <span class="vi">@size</span> <span class="o">=</span> <span class="k">case</span> <span class="n">adtype</span>
     <span class="c1"># customize your sizes and conditions</span>
       <span class="k">when</span> <span class="mi">1</span>
@@ -273,7 +275,7 @@ public/images/mugshots/thumb/2.png
          <span class="s1">&#39;200x150&#39;</span>
        <span class="k">when</span> <span class="mi">3</span>
          <span class="s1">&#39;250x200&#39;</span>
-       <span class="k">else</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+       <span class="k">else</span>
          <span class="s1">&#39;250x250&#39;</span>
     <span class="k">end</span>
   <span class="k">end</span>
@@ -282,9 +284,9 @@ public/images/mugshots/thumb/2.png
 
 <span class="c1">#modify this as you normally would, but without the :resize_to parameter</span>
 <span class="n">has_attachment</span> <span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="ss">:image</span><span class="p">,</span>
-                <span class="ss">:storage</span> <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span>
-                <span class="ss">:max_size</span> <span class="o">=&gt;</span> <span class="mi">500</span><span class="o">.</span><span class="n">kilobytes</span><span class="p">,</span>
-                <span class="ss">:path_prefix</span> <span class="o">=&gt;</span> <span class="s2">&quot;public/images/&quot;</span>
+               <span class="ss">:storage</span> <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span>
+               <span class="ss">:max_size</span> <span class="o">=&gt;</span> <span class="mi">500</span><span class="o">.</span><span class="n">kilobytes</span><span class="p">,</span>
+               <span class="ss">:path_prefix</span> <span class="o">=&gt;</span> <span class="s2">&quot;public/images/&quot;</span>
 <span class="n">validates_as_attachment</span>
 </pre>
 </div>
@@ -451,13 +453,13 @@ public/images/mugshots/thumb/2.png
 
 
 <div class="highlight"><pre><span class="k">class</span> <span class="nc">Photo</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-	<span class="n">has_attachment</span>	<span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="ss">:image</span><span class="p">,</span> 
-              							<span class="ss">:storage</span> <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span> 
-              							<span class="ss">:size</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="n">kilobyte</span> <span class="o">.</span><span class="n">.</span> <span class="mi">10</span><span class="o">.</span><span class="n">megabytes</span><span class="p">,</span>
-              							<span class="ss">:resize_to</span> <span class="o">=&gt;</span> <span class="s1">&#39;500&gt;&#39;</span><span class="p">,</span>
-                            <span class="ss">:thumbnails</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:thumb</span> <span class="o">=&gt;</span> <span class="s1">&#39;125&#39;</span> <span class="p">},</span>
-              							<span class="ss">:path_prefix</span> <span class="o">=&gt;</span> <span class="s1">&#39;public/images/product_pics&#39;</span><span class="p">,</span>
-                            <span class="ss">:processor</span>    <span class="o">=&gt;</span> <span class="s1">&#39;MiniMagick&#39;</span>
+  <span class="n">has_attachment</span> <span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="ss">:image</span><span class="p">,</span> 
+                 <span class="ss">:storage</span> <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span>
+                 <span class="ss">:size</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="n">kilobyte</span> <span class="o">.</span><span class="n">.</span> <span class="mi">10</span><span class="o">.</span><span class="n">megabytes</span><span class="p">,</span>
+                 <span class="ss">:resize_to</span> <span class="o">=&gt;</span> <span class="s1">&#39;500&gt;&#39;</span><span class="p">,</span>
+                 <span class="ss">:thumbnails</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:thumb</span> <span class="o">=&gt;</span> <span class="s1">&#39;125&#39;</span> <span class="p">},</span>
+                 <span class="ss">:path_prefix</span> <span class="o">=&gt;</span> <span class="s1">&#39;public/images/product_pics&#39;</span><span class="p">,</span>
+                 <span class="ss">:processor</span> <span class="o">=&gt;</span> <span class="s1">&#39;MiniMagick&#39;</span>
   <span class="n">validates_as_attachment</span>
   <span class="n">belongs_to</span>  <span class="ss">:product</span>
 
@@ -554,12 +556,12 @@ public/images/mugshots/thumb/2.png
   <span class="n">belongs_to</span> <span class="ss">:manufacturer_model</span>  
   
   <span class="n">has_attachment</span> <span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="ss">:image</span><span class="p">,</span>
-  				 <span class="ss">:storage</span>	   <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span>
-  				 <span class="ss">:max_size</span>	   <span class="o">=&gt;</span> <span class="mi">500</span><span class="o">.</span><span class="n">kilobytes</span><span class="p">,</span>
-  				 <span class="ss">:resize_to</span>    <span class="o">=&gt;</span> <span class="s1">&#39;384x256&gt;&#39;</span><span class="p">,</span>  				 
-  				 <span class="ss">:thumbnails</span>   <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:thumb</span> <span class="o">=&gt;</span> <span class="s1">&#39;98&gt;&#39;</span> <span class="p">},</span>
-  				 <span class="ss">:path_prefix</span> <span class="o">=&gt;</span> <span class="s1">&#39;public/device_pictures/&#39;</span>
-  				 
+                 <span class="ss">:storage</span> <span class="o">=&gt;</span> <span class="ss">:file_system</span><span class="p">,</span>
+                 <span class="ss">:max_size</span> <span class="o">=&gt;</span> <span class="mi">500</span><span class="o">.</span><span class="n">kilobytes</span><span class="p">,</span>
+                 <span class="ss">:resize_to</span> <span class="o">=&gt;</span> <span class="s1">&#39;384x256&gt;&#39;</span><span class="p">,</span> 
+                 <span class="ss">:thumbnails</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:thumb</span> <span class="o">=&gt;</span> <span class="s1">&#39;98&gt;&#39;</span> <span class="p">},</span>
+                 <span class="ss">:path_prefix</span> <span class="o">=&gt;</span> <span class="s1">&#39;public/device_pictures/&#39;</span>
+
   <span class="n">validates_as_attachment</span>
   
   <span class="k">def</span> <span class="nf">full_filename</span><span class="p">(</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
