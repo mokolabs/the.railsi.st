@@ -1,11 +1,16 @@
-License
-=======
+## Overview
 
-The following directories and their contents are copyright Patrick Crowley.
+This app contains [the.railsi.st](http://the.railsi.st/), my Ruby/Rails blog and the code used to generate it.
 
-You may not reuse anything in these directories without my permission:
+The blog is created using the [Jekyll](http://github.com/mojombo/jekyll), the blog-aware, static site generator. Jekyll allows you to easily publish a blog or other static website without a database or persistent blogging application.
+
+## Licensing
+
+Feel free to copy this app and use it as the basis for your own Jekyll-based project.
+
+Everything is MIT Licensed, with the exception of the following directories:
 
 + _posts/
 + images/
 
-All other directories and files are MIT Licensed. Feel free to use the rest of this repo as you please. If you do use anything, a link back to http://github.com/mokolabs/ would be appreciated, but is not required.
+These are copyright Patrick Crowley, and should not be used without my permission.
