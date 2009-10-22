@@ -240,7 +240,7 @@ a:hover {
 }
 
 pre {
-  font-family: Monaco, serif;
+  font-family: Monaco, Consolas, "Bitstream Vera Sans Mono", "Lucida Console", "Courier New", monospace;
   font-size: 12px;
   padding: 0;
 }
